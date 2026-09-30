@@ -77,13 +77,13 @@
 
   /* Sizes from Figma; all use line-height "normal" (~1.3 for DM Sans) */
   --text-*: initial;
-  --text-display: 166px; /* "Vlad" / "Todirut" */
-  --text-display--line-height: 1;
+  --text-display: clamp(80px, 9.6vw, 166px); /* "Vlad" / "Todirut" — 166px @ 1728 */
+  --text-display--line-height: 0.82;
   --text-title-xl: 72px; /* project title */
   --text-title-xl--line-height: 1.3;
   --text-title-lg: 55px; /* section title */
   --text-title-lg--line-height: 1.3;
-  --text-lead: 40px; /* hero tagline */
+  --text-lead: clamp(24px, 2.3vw, 40px); /* hero tagline — 40px @ 1728 */
   --text-lead--line-height: 1.3;
   --text-title-md: 37px; /* skill category */
   --text-title-md--line-height: 1.3;
