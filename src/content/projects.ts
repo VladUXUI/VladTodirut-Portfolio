@@ -17,7 +17,7 @@ export const productProjects: Project[] = [
     title: "Mezo",
     tags: "Fintech / Crypto / WebApp",
     description: PLACEHOLDER_DESCRIPTION,
-    image: null,
+    image: "/images/work/mezo.png",
   },
   {
     slug: "skouta",
@@ -31,7 +31,7 @@ export const productProjects: Project[] = [
     title: "Taho",
     tags: "Fintech / Wallet / Browser extension",
     description: PLACEHOLDER_DESCRIPTION,
-    image: null,
+    image: "/images/work/taho.png",
   },
   {
     slug: "echoes",
@@ -45,7 +45,7 @@ export const productProjects: Project[] = [
     title: "Subscape",
     tags: "Web3 game / Governance / WebApp",
     description: PLACEHOLDER_DESCRIPTION,
-    image: null,
+    image: "/images/work/subscape.png",
   },
 ];
 

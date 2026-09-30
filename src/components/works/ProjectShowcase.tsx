@@ -1,12 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { preload } from "react-dom";
+import { getImageProps } from "next/image";
 import {
   AnimatePresence,
   MotionConfig,
   animate,
   motion,
   useMotionValueEvent,
+  useInView,
   useScroll,
 } from "motion/react";
 import type { Project } from "@/content/projects";
@@ -15,6 +18,8 @@ import { EASE_OUT } from "@/components/intro/timeline";
 import { Container } from "@/components/ui/Container";
 import { ProjectVisual } from "./ProjectVisual";
 import { SectionHeading } from "./SectionHeading";
+
+const DESKTOP_IMAGE_SIZES = "(min-width: 1024px) 44vw, 100vw";
 
 /* Scroll distance each project stays active for (desktop) */
 const SCROLL_PER_PROJECT = "35vh";
@@ -79,6 +84,17 @@ function DesktopWorks({
     target: trackRef,
     offset: [`start ${PIN_TOP}px`, "end end"],
   });
+
+  // Only the active image is mounted, so fetch the others as the section nears
+  const nearby = useInView(trackRef, { once: true, margin: "100% 0px" });
+  useEffect(() => {
+    if (!nearby) return;
+    for (const { image } of projects) {
+      if (!image) continue;
+      const { props } = getImageProps({ src: image, alt: "", fill: true, sizes: DESKTOP_IMAGE_SIZES });
+      preload(props.src, { as: "image", imageSrcSet: props.srcSet, imageSizes: props.sizes });
+    }
+  }, [nearby, projects]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     setActive(Math.min(count - 1, Math.max(0, Math.floor(progress * count))));
@@ -147,7 +163,7 @@ function ProjectImage({ project }: { project: Project }) {
           exit={{ opacity: 0, transition: { duration: 0.2, delay: 0.5 } }}
           transition={{ duration: 0.7, ease: EASE_OUT }}
         >
-          <ProjectVisual project={project} sizes="(min-width: 1024px) 44vw, 100vw" />
+          <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} />
         </motion.div>
       </AnimatePresence>
     </div>
