@@ -15,7 +15,7 @@ import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { EASE_OUT } from "@/components/intro/timeline";
 
 /* Scroll distance each project stays active for (desktop) */
-const SCROLL_PER_PROJECT = "70vh";
+const SCROLL_PER_PROJECT = "35vh";
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
