@@ -132,3 +132,13 @@
   color: transparent;
   -webkit-text-stroke: 2px var(--color-accent-green);
 }
+
+/* 9px dash / 9px gap line (Figma "Line 108") */
+@utility divider-dashed {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-tick) 0 9px,
+    transparent 9px 18px
+  );
+}
