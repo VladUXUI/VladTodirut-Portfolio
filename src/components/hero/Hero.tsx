@@ -1,10 +1,14 @@
 import { CharReveal, Squiggle, Typewriter, WordReveal } from "./IntroText";
 import { INTRO } from "@/components/intro/timeline";
+import { Container } from "@/components/ui/Container";
 import { PortraitRings } from "./PortraitRings";
 
 export function Hero() {
   return (
-    <section className="relative mx-auto grid w-full max-w-[1728px] items-center gap-48 px-24 pt-128 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,720px)] lg:px-160 lg:pt-0">
+    <Container
+      as="section"
+      className="relative grid items-center gap-48 pt-128 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,720px)] lg:pt-0"
+    >
       <div className="bg-dots pointer-events-none absolute inset-24 -z-10" aria-hidden />
 
       <div className="flex flex-col gap-40">
@@ -31,7 +35,7 @@ export function Hero() {
         </div>
       </div>
 
-      <PortraitRings className="mx-auto w-full max-w-[720px]" />
-    </section>
+      <PortraitRings className="mx-auto w-full max-w-[720px] lg:mr-0" />
+    </Container>
   );
 }

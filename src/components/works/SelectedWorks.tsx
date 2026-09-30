@@ -13,6 +13,7 @@ import {
 import { projects, type Project } from "@/content/projects";
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { EASE_OUT } from "@/components/intro/timeline";
+import { Container } from "@/components/ui/Container";
 
 /* Scroll distance each project stays active for (desktop) */
 const SCROLL_PER_PROJECT = "35vh";
@@ -22,7 +23,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
 export function SelectedWorks() {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="work" className="mx-auto w-full max-w-[1728px] px-24 pt-96 lg:px-64 lg:pt-128">
+      <Container as="section" id="work" className="pt-96 lg:pt-128">
         <h2 className="flex flex-col items-start gap-24 text-title-2xl font-medium">
           Selected Product Design Works
           <span className="h-16 w-full max-w-[738px] bg-accent-blue" aria-hidden />
@@ -30,7 +31,7 @@ export function SelectedWorks() {
 
         <DesktopWorks />
         <MobileWorks />
-      </section>
+      </Container>
     </MotionConfig>
   );
 }
