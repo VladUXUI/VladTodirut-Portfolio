@@ -23,11 +23,13 @@ const PIN_TOP = 96;
 /* Space between cards (Figma: 101px) */
 const GAP = 96;
 /*
- * Card width: Figma size (1258 × 766), but never so tall that the text block
+ * Card width: Figma width (1258) with the image 25% shorter than the mock
+ * (1258 × 575), but never so tall that the text block
  * (~310px) falls off-screen while pinned, and narrow enough for the next card
  * to peek in on the right.
  */
-const CARD_WIDTH = "min(1258px, 72vw, calc((100dvh - 440px) * 1258 / 766))";
+const IMAGE_RATIO = "1258 / 575";
+const CARD_WIDTH = `min(1258px, 72vw, calc((100dvh - 440px) * ${IMAGE_RATIO}))`;
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -177,7 +179,7 @@ function Card({
       style={style}
       className={`shrink-0 transition-opacity duration-500 ${active ? "opacity-100" : "opacity-20"} ${className}`}
     >
-      <div className="relative aspect-[1258/766] w-full">
+      <div className="relative w-full" style={{ aspectRatio: IMAGE_RATIO }}>
         <ProjectVisual project={project} sizes="(min-width: 1024px) 72vw, 85vw" fit="cover" />
       </div>
 
