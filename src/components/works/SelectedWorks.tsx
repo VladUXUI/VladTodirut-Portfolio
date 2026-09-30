@@ -17,6 +17,8 @@ import { Container } from "@/components/ui/Container";
 
 /* Scroll distance each project stays active for (desktop) */
 const SCROLL_PER_PROJECT = "35vh";
+/* Distance from the viewport top where the image + list pin */
+const PIN_TOP = 96;
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -45,7 +47,7 @@ function DesktopWorks() {
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
-    offset: ["start start", "end end"],
+    offset: [`start ${PIN_TOP}px`, "end end"],
   });
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
@@ -56,8 +58,8 @@ function DesktopWorks() {
   const goTo = (index: number) => {
     const track = trackRef.current;
     if (!track) return;
-    const top = track.getBoundingClientRect().top + window.scrollY;
-    const distance = track.offsetHeight - window.innerHeight;
+    const top = track.getBoundingClientRect().top + window.scrollY - PIN_TOP;
+    const distance = track.offsetHeight - (window.innerHeight - PIN_TOP);
     const target = top + ((index + 0.5) / count) * distance;
     // Native smooth scroll gets cut short as rows re-layout mid-scroll
     animate(window.scrollY, target, {
@@ -70,11 +72,11 @@ function DesktopWorks() {
   return (
     <div
       ref={trackRef}
-      className="relative hidden lg:block"
-      style={{ height: `calc(100dvh + ${count} * ${SCROLL_PER_PROJECT})` }}
+      className="relative mt-64 hidden lg:block"
+      style={{ height: `calc(100dvh - ${PIN_TOP}px + ${count} * ${SCROLL_PER_PROJECT})` }}
     >
-      <div className="sticky top-0 flex h-dvh items-center">
-        <div className="grid w-full grid-cols-[minmax(0,752fr)_minmax(0,706fr)] items-center gap-64 xl:gap-128">
+      <div className="sticky flex items-start" style={{ top: PIN_TOP, height: `calc(100dvh - ${PIN_TOP}px)` }}>
+        <div className="grid w-full grid-cols-[minmax(0,752fr)_minmax(0,706fr)] items-start gap-64 xl:gap-128">
           <ProjectImage project={projects[active]} />
 
           <ol className="flex flex-col">
