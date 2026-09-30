@@ -10,7 +10,7 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
-import { projects, type Project } from "@/content/projects";
+import type { Project } from "@/content/projects";
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { EASE_OUT } from "@/components/intro/timeline";
 import { Container } from "@/components/ui/Container";
@@ -22,17 +22,41 @@ const PIN_TOP = 96;
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
-export function SelectedWorks() {
+/* Static class names so Tailwind can see them */
+const ACCENTS = {
+  blue: { bar: "bg-accent-blue", text: "text-accent-blue" },
+  green: { bar: "bg-accent-green", text: "text-accent-green" },
+} as const;
+
+type Accent = (typeof ACCENTS)[keyof typeof ACCENTS];
+
+export type ProjectShowcaseProps = {
+  id: string;
+  title: string;
+  projects: Project[];
+  accent?: keyof typeof ACCENTS;
+  /** Side the image sits on (desktop) */
+  imageSide?: "left" | "right";
+};
+
+export function ProjectShowcase({
+  id,
+  title,
+  projects,
+  accent = "blue",
+  imageSide = "left",
+}: ProjectShowcaseProps) {
+  const colors = ACCENTS[accent];
   return (
     <MotionConfig reducedMotion="user">
-      <Container as="section" id="work" className="pt-96 lg:pt-128">
+      <Container as="section" id={id} className="pt-96 lg:pt-128">
         <h2 className="flex flex-col items-start gap-24 text-title-2xl font-medium">
-          Selected Product Design Works
-          <span className="h-16 w-full max-w-[738px] bg-accent-blue" aria-hidden />
+          {title}
+          <span className={`h-16 w-full max-w-[738px] ${colors.bar}`} aria-hidden />
         </h2>
 
-        <DesktopWorks />
-        <MobileWorks />
+        <DesktopWorks projects={projects} colors={colors} imageSide={imageSide} />
+        <MobileWorks projects={projects} />
       </Container>
     </MotionConfig>
   );
@@ -40,7 +64,15 @@ export function SelectedWorks() {
 
 /* ---------- Desktop: pinned image + list, active project follows scroll ---------- */
 
-function DesktopWorks() {
+function DesktopWorks({
+  projects,
+  colors,
+  imageSide,
+}: {
+  projects: Project[];
+  colors: Accent;
+  imageSide: "left" | "right";
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const count = projects.length;
@@ -76,8 +108,16 @@ function DesktopWorks() {
       style={{ height: `calc(100dvh - ${PIN_TOP}px + ${count} * ${SCROLL_PER_PROJECT})` }}
     >
       <div className="sticky flex items-start" style={{ top: PIN_TOP, height: `calc(100dvh - ${PIN_TOP}px)` }}>
-        <div className="grid w-full grid-cols-[minmax(0,752fr)_minmax(0,706fr)] items-start gap-64 xl:gap-128">
-          <ProjectImage project={projects[active]} />
+        <div
+          className={`grid w-full items-start gap-64 xl:gap-128 ${
+            imageSide === "left"
+              ? "grid-cols-[minmax(0,752fr)_minmax(0,706fr)]"
+              : "grid-cols-[minmax(0,706fr)_minmax(0,752fr)]"
+          }`}
+        >
+          <div className={imageSide === "right" ? "order-last" : undefined}>
+            <ProjectImage project={projects[active]} />
+          </div>
 
           <ol className="flex flex-col">
             {projects.map((project, i) => (
@@ -86,6 +126,7 @@ function DesktopWorks() {
                 project={project}
                 index={i}
                 active={i === active}
+                activeClass={colors.text}
                 onSelect={() => goTo(i)}
               />
             ))}
@@ -119,16 +160,18 @@ function ProjectRow({
   project,
   index,
   active,
+  activeClass,
   onSelect,
 }: {
   project: Project;
   index: number;
   active: boolean;
+  activeClass: string;
   onSelect: () => void;
 }) {
   return (
     <li className="border-b border-dot" aria-current={active ? "true" : undefined}>
-      <div className="flex items-center justify-between gap-24 py-16">
+      <div className="flex flex-wrap items-center justify-between gap-x-24 gap-y-8 py-16">
         <button
           type="button"
           onClick={onSelect}
@@ -137,7 +180,7 @@ function ProjectRow({
           <span className="w-32 shrink-0 text-body font-medium text-fg-dim">{pad(index)}.</span>
           <span
             className={`text-title-xl font-medium whitespace-nowrap transition-[margin-left,color] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
-              active ? "ml-40 text-accent-blue" : "text-fg hover:text-fg-muted"
+              active ? `ml-40 ${activeClass}` : "text-fg hover:text-fg-muted"
             }`}
           >
             {project.title}
@@ -145,7 +188,7 @@ function ProjectRow({
         </button>
 
         {/* Tags ↔ CTA share one cell so the row never changes height */}
-        <div className="grid min-w-0 justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
+        <div className="ml-auto grid shrink-0 justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
           <AnimatePresence initial={false}>
             {active ? (
               <motion.div
@@ -195,7 +238,7 @@ function ProjectRow({
 
 /* ---------- Mobile / tablet: simple stacked cards ---------- */
 
-function MobileWorks() {
+function MobileWorks({ projects }: { projects: Project[] }) {
   return (
     <ol className="mt-48 flex flex-col gap-64 lg:hidden">
       {projects.map((project, i) => (
