@@ -37,7 +37,18 @@ const PEAK_OFFSET = -620; // how far above rest the top ring travels (past the h
 const RISE = { duration: 1.4, ease: [0.33, 0, 0.2, 1] as const };
 const STAGGER = 0.09; // seconds between rings
 const SETTLE = { type: "spring", stiffness: 70, damping: 13, mass: 1 } as const;
-const IDLE_AMPLITUDE = 5;
+
+/*
+ * Idle movement after the rings settle. Each ring layers a bob (px), a tilt
+ * (deg) and a squash (scaleY, reads as the ring tipping toward/away from you).
+ * Durations are deliberately uneven so the combined motion never lines up.
+ */
+const IDLE = [
+  { bob: 12, bobDur: 3.8, tilt: 2.5, tiltDur: 6.4, squash: 0.14, squashDur: 5.0 },
+  { bob: 9, bobDur: 4.6, tilt: -2, tiltDur: 7.3, squash: 0.1, squashDur: 5.9 },
+  { bob: 14, bobDur: 4.1, tilt: 3, tiltDur: 5.6, squash: 0.16, squashDur: 4.4 },
+];
+const IDLE_FADE_IN = 1.2; // seconds to ease from rest into the idle loop
 
 // Lower half of an ellipse, drawn right → left through the bottom
 const frontArc = (cy: number) =>
@@ -49,11 +60,7 @@ export function PortraitRings({ className }: { className?: string }) {
   const maskId = `${id}-reveal`;
   const reduceMotion = useReducedMotion();
 
-  // Vertical offset of each ring from its resting position
-  const r0 = useMotionValue(START_OFFSET);
-  const r1 = useMotionValue(START_OFFSET);
-  const r2 = useMotionValue(START_OFFSET);
-  const rings = [r0, r1, r2];
+  const rings = [useRingMotion(), useRingMotion(), useRingMotion()];
   const opacity = useMotionValue(0);
 
   // Edge of the revealed area (y of the lead ring's centre). Only ever moves
@@ -62,13 +69,13 @@ export function PortraitRings({ className }: { className?: string }) {
 
   useEffect(() => {
     if (reduceMotion) {
-      rings.forEach((ring) => ring.set(0));
+      rings.forEach((ring) => ring.y.set(0));
       opacity.set(1);
       revealCy.set(-1000);
       return;
     }
 
-    const unsubscribe = r0.on("change", (offset) => {
+    const unsubscribe = rings[0].y.on("change", (offset) => {
       const cy = RING_REST_CY[0] + offset;
       if (cy < revealCy.get()) revealCy.set(cy);
     });
@@ -79,23 +86,14 @@ export function PortraitRings({ className }: { className?: string }) {
     controls.push(animate(opacity, 1, { duration: 0.4 }));
 
     rings.forEach((ring, i) => {
-      const delay = i * STAGGER;
-      const rise = animate(ring, PEAK_OFFSET, { ...RISE, delay });
+      const rise = animate(ring.y, PEAK_OFFSET, { ...RISE, delay: i * STAGGER });
       controls.push(rise);
       rise.then(() => {
         if (cancelled) return;
-        const settle = animate(ring, 0, SETTLE);
+        const settle = animate(ring.y, 0, SETTLE);
         controls.push(settle);
         settle.then(() => {
-          if (cancelled) return;
-          // Gentle idle float, out of phase per ring
-          controls.push(
-            animate(ring, [0, -IDLE_AMPLITUDE, 0], {
-              duration: 4 + i * 0.7,
-              ease: "easeInOut",
-              repeat: Infinity,
-            }),
-          );
+          if (!cancelled) controls.push(...startIdle(ring, IDLE[i]));
         });
       });
     });
@@ -134,7 +132,7 @@ export function PortraitRings({ className }: { className?: string }) {
       {/* Back rings — behind the portrait */}
       <motion.g style={{ opacity }}>
         {rings.map((ring, i) => (
-          <RingGroup key={i} offset={ring}>
+          <RingGroup key={i} ring={ring} cy={RING_REST_CY[i]}>
             <ellipse
               cx={RING.cx}
               cy={RING_REST_CY[i]}
@@ -166,7 +164,7 @@ export function PortraitRings({ className }: { className?: string }) {
       {/* Front arcs — over the portrait */}
       <motion.g style={{ opacity }}>
         {rings.map((ring, i) => (
-          <RingGroup key={i} offset={ring}>
+          <RingGroup key={i} ring={ring} cy={RING_REST_CY[i]}>
             <path
               d={frontArc(RING_REST_CY[i])}
               fill="none"
@@ -180,12 +178,62 @@ export function PortraitRings({ className }: { className?: string }) {
   );
 }
 
+type RingMotion = {
+  y: MotionValue<number>;
+  rotate: MotionValue<number>;
+  scaleY: MotionValue<number>;
+};
+
+function useRingMotion(): RingMotion {
+  return {
+    y: useMotionValue(START_OFFSET),
+    rotate: useMotionValue(0),
+    scaleY: useMotionValue(1),
+  };
+}
+
+// Loops out from the resting value and back, so there's no jump at the start
+function startIdle(ring: RingMotion, idle: (typeof IDLE)[number]) {
+  const loop = (duration: number) => ({
+    duration,
+    ease: "easeInOut" as const,
+    repeat: Infinity,
+  });
+  return [
+    animate(ring.y, [0, -idle.bob, 0, idle.bob * 0.4, 0], loop(idle.bobDur)),
+    animate(ring.rotate, [0, idle.tilt, 0, -idle.tilt, 0], {
+      ...loop(idle.tiltDur),
+      delay: IDLE_FADE_IN * 0.3,
+    }),
+    animate(ring.scaleY, [1, 1 - idle.squash, 1, 1 + idle.squash * 0.6, 1], {
+      ...loop(idle.squashDur),
+      delay: IDLE_FADE_IN * 0.6,
+    }),
+  ];
+}
+
+// Back ellipse and front arc share one transform origin (the ring's centre),
+// otherwise tilt/squash would pivot them around different bounding boxes.
 function RingGroup({
-  offset,
+  ring,
+  cy,
   children,
 }: {
-  offset: MotionValue<number>;
+  ring: RingMotion;
+  cy: number;
   children: React.ReactNode;
 }) {
-  return <motion.g style={{ y: offset }}>{children}</motion.g>;
+  return (
+    <motion.g
+      style={{
+        y: ring.y,
+        rotate: ring.rotate,
+        scaleY: ring.scaleY,
+        transformBox: "view-box",
+        transformOrigin: `${RING.cx}px ${cy}px`,
+      }}
+    >
+      {children}
+    </motion.g>
+  );
 }
