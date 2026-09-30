@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
 import {
   AnimatePresence,
   MotionConfig,
@@ -14,6 +13,8 @@ import type { Project } from "@/content/projects";
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { EASE_OUT } from "@/components/intro/timeline";
 import { Container } from "@/components/ui/Container";
+import { ProjectVisual } from "./ProjectVisual";
+import { SectionHeading } from "./SectionHeading";
 
 /* Scroll distance each project stays active for (desktop) */
 const SCROLL_PER_PROJECT = "35vh";
@@ -50,10 +51,7 @@ export function ProjectShowcase({
   return (
     <MotionConfig reducedMotion="user">
       <Container as="section" id={id} className="pt-96 lg:pt-128">
-        <h2 className="flex flex-col items-start gap-24 text-title-2xl font-medium">
-          {title}
-          <span className={`h-16 w-full max-w-[738px] ${colors.bar}`} aria-hidden />
-        </h2>
+        <SectionHeading barClass={colors.bar}>{title}</SectionHeading>
 
         <DesktopWorks projects={projects} colors={colors} imageSide={imageSide} />
         <MobileWorks projects={projects} />
@@ -247,27 +245,5 @@ function MobileWorks({ projects }: { projects: Project[] }) {
         </li>
       ))}
     </ol>
-  );
-}
-
-/* ---------- Shared ---------- */
-
-function ProjectVisual({ project, sizes }: { project: Project; sizes: string }) {
-  if (project.image) {
-    return (
-      <Image
-        src={project.image}
-        alt={`${project.title} project preview`}
-        fill
-        sizes={sizes}
-        className="object-contain"
-      />
-    );
-  }
-  // Placeholder until the real image exists
-  return (
-    <div className="flex size-full items-center justify-center rounded-xl bg-surface">
-      <span className="text-title-xl font-medium text-bg/20">{project.title}</span>
-    </div>
   );
 }

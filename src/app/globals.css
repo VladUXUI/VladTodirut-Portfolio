@@ -32,6 +32,7 @@
   --color-accent-blue: #0055ff;
   --color-accent-green: #02ae8f;
   --color-accent-lime: #e6ff00;
+  --color-accent-purple: #ac50e1; /* AI / Design System section */
 
   /* ---------- Spacing (8px grid) ----------
    * Utility number = pixels: p-8 → 8px, gap-24 → 24px.
@@ -106,6 +107,8 @@
   html {
     background: var(--color-bg);
     color: var(--color-fg);
+    /* Only affects sections that define snap points (horizontal showcase) */
+    scroll-snap-type: y proximity;
   }
 
   body {
