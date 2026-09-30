@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { preload } from "react-dom";
-import { getImageProps } from "next/image";
+import { useRef, useState } from "react";
 import {
   AnimatePresence,
   MotionConfig,
   animate,
   motion,
   useMotionValueEvent,
-  useInView,
+  useReducedMotion,
   useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
 } from "motion/react";
 import type { Project } from "@/content/projects";
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
@@ -25,6 +26,16 @@ const DESKTOP_IMAGE_SIZES = "(min-width: 1024px) 44vw, 100vw";
 const SCROLL_PER_PROJECT = "35vh";
 /* Distance from the viewport top where the image + list pin */
 const PIN_TOP = 96;
+/*
+ * Image mask: the next image wipes up from the bottom inside a short window
+ * around each switch point (fraction of one project's scroll), so it holds
+ * still most of the time and then snaps across, tied to the scroll position.
+ */
+const WIPE_WINDOW = 0.35;
+const WIPE_SPRING = { stiffness: 400, damping: 40, mass: 0.4 };
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -85,16 +96,11 @@ function DesktopWorks({
     offset: [`start ${PIN_TOP}px`, "end end"],
   });
 
-  // Only the active image is mounted, so fetch the others as the section nears
-  const nearby = useInView(trackRef, { once: true, margin: "100% 0px" });
-  useEffect(() => {
-    if (!nearby) return;
-    for (const { image } of projects) {
-      if (!image) continue;
-      const { props } = getImageProps({ src: image, alt: "", fill: true, sizes: DESKTOP_IMAGE_SIZES });
-      preload(props.src, { as: "image", imageSrcSet: props.srcSet, imageSizes: props.sizes });
-    }
-  }, [nearby, projects]);
+  // Scroll position in "projects" (0 → count), lightly sprung for the image mask
+  const position = useSpring(
+    useTransform(scrollYProgress, (v) => v * count),
+    WIPE_SPRING,
+  );
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     setActive(Math.min(count - 1, Math.max(0, Math.floor(progress * count))));
@@ -130,7 +136,7 @@ function DesktopWorks({
           }`}
         >
           <div className={imageSide === "right" ? "order-last" : undefined}>
-            <ProjectImage project={projects[active]} />
+            <ProjectImageStack projects={projects} position={position} />
           </div>
 
           <ol className="flex flex-col">
@@ -151,22 +157,48 @@ function DesktopWorks({
   );
 }
 
-function ProjectImage({ project }: { project: Project }) {
+/* All images stacked; each one masks in over the previous as you scroll */
+function ProjectImageStack({
+  projects,
+  position,
+}: {
+  projects: Project[];
+  position: MotionValue<number>;
+}) {
   return (
     <div className="relative aspect-[752/766] w-full">
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={project.slug}
-          className="absolute inset-0"
-          initial={{ clipPath: "inset(100% 0% 0% 0% round 40px)", scale: 1.04 }}
-          animate={{ clipPath: "inset(0% 0% 0% 0% round 40px)", scale: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.2, delay: 0.5 } }}
-          transition={{ duration: 0.7, ease: EASE_OUT }}
-        >
-          <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} />
-        </motion.div>
-      </AnimatePresence>
+      {projects.map((project, i) => (
+        <ImageLayer key={project.slug} project={project} index={i} position={position} />
+      ))}
     </div>
+  );
+}
+
+function ImageLayer({
+  project,
+  index,
+  position,
+}: {
+  project: Project;
+  index: number;
+  position: MotionValue<number>;
+}) {
+  const reduce = useReducedMotion();
+  const wipe = reduce ? 0.001 : WIPE_WINDOW;
+
+  // 0 → 1 as the scroll crosses this project's start (index), centred on it
+  const reveal = useTransform(position, (p) =>
+    index === 0 ? 1 : easeInOutCubic(clamp01((p - index + wipe / 2) / wipe)),
+  );
+  const clipPath = useTransform(reveal, (r) => `inset(${(1 - r) * 100}% 0% 0% 0% round 40px)`);
+  const scale = useTransform(reveal, [0, 1], [1.08, 1]);
+
+  return (
+    <motion.div className="absolute inset-0" style={{ clipPath, zIndex: index }}>
+      <motion.div className="absolute inset-0" style={{ scale }}>
+        <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} />
+      </motion.div>
+    </motion.div>
   );
 }
 
