@@ -187,33 +187,21 @@ function ProjectRow({
           </span>
         </button>
 
-        {/* Tags ↔ CTA share one cell so the row never changes height */}
-        <div className="ml-auto grid shrink-0 justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
-          <AnimatePresence initial={false}>
-            {active ? (
-              <motion.div
-                key="cta"
-                initial={{ opacity: 0, x: 12 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 12 }}
-                transition={{ duration: 0.35, ease: EASE_OUT }}
-              >
-                <CaseStudyLink href={`/work/${project.slug}`} />
-              </motion.div>
-            ) : (
-              <motion.p
-                key="tags"
-                className="max-w-[280px] text-right text-body font-light tracking-tag text-fg-dim"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                {project.tags}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* Tags hide while the project is active */}
+        <AnimatePresence initial={false}>
+          {!active && (
+            <motion.p
+              key="tags"
+              className="ml-auto max-w-[280px] text-right text-body font-light tracking-tag text-fg-dim"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {project.tags}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       <AnimatePresence initial={false}>
@@ -226,9 +214,12 @@ function ProjectRow({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: EASE_OUT }}
           >
-            <p className="max-w-[613px] pb-40 pl-80 text-body font-light tracking-tag text-fg-dim">
-              {project.description}
-            </p>
+            <div className="flex flex-col items-start gap-24 pb-40 pl-80">
+              <p className="max-w-[613px] text-body font-light tracking-tag text-fg-dim">
+                {project.description}
+              </p>
+              <CaseStudyLink href={`/work/${project.slug}`} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
