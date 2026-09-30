@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, INTRO } from "@/components/hero/intro";
 
 const ITEMS = [
   { label: "Home", href: "/" },
@@ -26,7 +27,12 @@ export function MainMenu() {
   const marked = hovered ?? active;
 
   return (
-    <nav aria-label="Main">
+    <motion.nav
+      aria-label="Main"
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={reduceMotion ? { duration: 0 } : { delay: INTRO.menu, duration: 0.6, ease: EASE_OUT }}
+    >
       <ul
         className="flex items-center gap-40 sm:gap-56"
         onMouseLeave={() => setHovered(null)}
@@ -65,7 +71,7 @@ export function MainMenu() {
           );
         })}
       </ul>
-    </nav>
+    </motion.nav>
   );
 }
 

@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
+import { INTRO } from "./intro";
 
 /*
  * Geometry is in Figma frame coordinates (node 444:365), so values can be
@@ -83,10 +84,10 @@ export function PortraitRings({ className }: { className?: string }) {
     const controls: { stop: () => void }[] = [];
     let cancelled = false;
 
-    controls.push(animate(opacity, 1, { duration: 0.4 }));
+    controls.push(animate(opacity, 1, { duration: 0.4, delay: INTRO.rings }));
 
     rings.forEach((ring, i) => {
-      const rise = animate(ring.y, PEAK_OFFSET, { ...RISE, delay: i * STAGGER });
+      const rise = animate(ring.y, PEAK_OFFSET, { ...RISE, delay: INTRO.rings + i * STAGGER });
       controls.push(rise);
       rise.then(() => {
         if (cancelled) return;

@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { CharReveal, Squiggle, Typewriter, WordReveal } from "./IntroText";
+import { INTRO } from "./intro";
 import { PortraitRings } from "./PortraitRings";
 
 export function Hero() {
@@ -8,17 +9,24 @@ export function Hero() {
 
       <div className="flex flex-col gap-40">
         <h1 className="flex flex-col">
-          <span className="text-display font-medium">Vlad</span>
-          <span className="text-display font-mono text-outline">Todirut</span>
+          <CharReveal text="Vlad" delay={INTRO.name} className="text-display font-medium" />
+          <Typewriter
+            text="Todirut"
+            delay={INTRO.surname}
+            className="self-start text-display font-mono text-outline"
+            caretClassName="bg-accent-green"
+          />
         </h1>
 
         <div className="flex flex-col gap-4 pl-8">
-          <p className="max-w-[556px] text-lead font-light text-fg-muted">
-            Turning complex fintech problems into easy flows.
-          </p>
+          <WordReveal
+            text="Turning complex fintech problems into easy flows."
+            delay={INTRO.tagline}
+            className="max-w-[556px] text-lead font-light text-fg-muted"
+          />
           <p className="flex flex-col items-start gap-4 text-label font-mono text-fg-mono">
-            Since 2010
-            <Image src="/images/hero/squiggle.svg" alt="" width={123} height={11} />
+            <Typewriter text="Since 2010" delay={INTRO.since} charDuration={0.05} />
+            <Squiggle delay={INTRO.squiggle} />
           </p>
         </div>
       </div>
