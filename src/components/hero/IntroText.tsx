@@ -1,7 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { EASE_OUT } from "./intro";
+import { useIntroReady } from "@/components/intro/IntroProvider";
+import { SQUIGGLE_PATH, SQUIGGLE_VIEWBOX } from "@/components/intro/squiggle";
+import { EASE_OUT } from "@/components/intro/timeline";
 
 const INSTANT = { duration: 0 };
 
@@ -18,6 +20,7 @@ export function CharReveal({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ready = useIntroReady();
   return (
     <span className={`inline-flex ${className}`}>
       <span className="sr-only">{text}</span>
@@ -27,7 +30,7 @@ export function CharReveal({
           <motion.span
             className="inline-block"
             initial={{ y: "110%" }}
-            animate={{ y: 0 }}
+            animate={ready ? { y: 0 } : { y: "110%" }}
             transition={reduce ? INSTANT : { delay: delay + i * stagger, duration: 0.8, ease: EASE_OUT }}
           >
             {char}
@@ -51,6 +54,7 @@ export function WordReveal({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ready = useIntroReady();
   const words = text.split(" ");
   return (
     <span className={className}>
@@ -61,7 +65,7 @@ export function WordReveal({
             <motion.span
               className="inline-block"
               initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={ready ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
               transition={reduce ? INSTANT : { delay: delay + i * stagger, duration: 0.7, ease: EASE_OUT }}
             >
               {word}
@@ -92,6 +96,7 @@ export function Typewriter({
   caretClassName?: string;
 }) {
   const reduce = useReducedMotion();
+  const ready = useIntroReady();
   const n = text.length;
   const typing = n * charDuration;
   const blink = 1.2;
@@ -103,56 +108,50 @@ export function Typewriter({
       <motion.span
         className="inline-block"
         initial={{ clipPath: "inset(-20% 100% -20% -5%)" }}
-        animate={{ clipPath: "inset(-20% 0% -20% -5%)" }}
+        animate={{ clipPath: ready ? "inset(-20% 0% -20% -5%)" : "inset(-20% 100% -20% -5%)" }}
         transition={reduce ? INSTANT : { delay, duration: typing, ease: step }}
       >
         {text}
       </motion.span>
-      {!reduce && (
-        <motion.span
-          aria-hidden
-          className={`absolute top-[12%] h-[76%] w-[0.08em] ${caretClassName}`}
-          initial={{ left: "0%", opacity: 0 }}
-          animate={{ left: "100%", opacity: [0, 1, 1, 0, 1, 0, 1, 0] }}
-          transition={{
-            left: { delay, duration: typing, ease: step },
-            opacity: {
-              delay,
-              duration: total,
-              ease: "linear",
-              times: [
-                0,
-                0.01,
-                typing / total,
-                (typing + 0.2) / total,
-                (typing + 0.45) / total,
-                (typing + 0.65) / total,
-                (typing + 0.9) / total,
-                1,
-              ],
-            },
-          }}
-        />
-      )}
+      <motion.span
+        aria-hidden
+        className={`absolute top-[12%] h-[76%] w-[0.08em] ${caretClassName}`}
+        initial={{ left: "0%", opacity: 0 }}
+        animate={ready ? { left: "100%", opacity: [0, 1, 1, 0, 1, 0, 1, 0] } : { left: "0%", opacity: 0 }}
+        transition={reduce ? INSTANT : {
+          left: { delay, duration: typing, ease: step },
+          opacity: {
+            delay,
+            duration: total,
+            ease: "linear",
+            times: [
+              0,
+              0.01,
+              typing / total,
+              (typing + 0.2) / total,
+              (typing + 0.45) / total,
+              (typing + 0.65) / total,
+              (typing + 0.9) / total,
+              1,
+            ],
+          },
+        }}
+      />
     </span>
   );
 }
 
-/* Figma "Group 3" squiggle as one continuous path, drawn left → right */
-const SQUIGGLE_PATH =
-  "M1.5 5.5" +
-  Array.from({ length: 15 }, (_, k) => `A4 4 0 0 ${k % 2} ${1.5 + 8 * (k + 1)} 5.5`).join("");
-
 export function Squiggle({ delay }: { delay: number }) {
   const reduce = useReducedMotion();
+  const ready = useIntroReady();
   return (
-    <svg width={123} height={11} viewBox="0 0 123 11" fill="none" aria-hidden className="overflow-visible">
+    <svg width={123} height={11} viewBox={SQUIGGLE_VIEWBOX} fill="none" aria-hidden className="overflow-visible">
       <motion.path
         d={SQUIGGLE_PATH}
         stroke="var(--color-accent-blue)"
         strokeWidth={3}
         initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
+        animate={{ pathLength: ready ? 1 : 0 }}
         transition={reduce ? INSTANT : { delay, duration: 0.6, ease: "easeInOut" }}
       />
     </svg>

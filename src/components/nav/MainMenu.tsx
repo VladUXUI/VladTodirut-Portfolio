@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
-import { EASE_OUT, INTRO } from "@/components/hero/intro";
+import { useIntroReady } from "@/components/intro/IntroProvider";
+import { EASE_OUT, INTRO } from "@/components/intro/timeline";
 
 const ITEMS = [
   { label: "Home", href: "/" },
@@ -18,6 +19,7 @@ const GLIDE = { type: "spring", stiffness: 420, damping: 34 } as const;
 export function MainMenu() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
+  const ready = useIntroReady();
   const [hovered, setHovered] = useState<string | null>(null);
 
   const active =
@@ -30,7 +32,7 @@ export function MainMenu() {
     <motion.nav
       aria-label="Main"
       initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
       transition={reduceMotion ? { duration: 0 } : { delay: INTRO.menu, duration: 0.6, ease: EASE_OUT }}
     >
       <ul

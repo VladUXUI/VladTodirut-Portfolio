@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Anonymous_Pro, DM_Sans } from "next/font/google";
+import { IntroProvider } from "@/components/intro/IntroProvider";
+import { Loader } from "@/components/intro/Loader";
 import { MainMenu } from "@/components/nav/MainMenu";
 import "./globals.css";
 
@@ -27,10 +29,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${dmSans.variable} ${anonymousPro.variable} h-full antialiased`}
     >
       <body className="relative min-h-full flex flex-col">
-        <header className="absolute inset-x-0 top-48 z-10 flex justify-center">
-          <MainMenu />
-        </header>
-        {children}
+        <IntroProvider>
+          <Loader />
+          <noscript>
+            <style>{"#site-loader{display:none}"}</style>
+          </noscript>
+          <header className="absolute inset-x-0 top-48 z-10 flex justify-center">
+            <MainMenu />
+          </header>
+          {children}
+        </IntroProvider>
       </body>
     </html>
   );

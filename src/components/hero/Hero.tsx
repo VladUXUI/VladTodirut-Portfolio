@@ -1,5 +1,5 @@
 import { CharReveal, Squiggle, Typewriter, WordReveal } from "./IntroText";
-import { INTRO } from "./intro";
+import { INTRO } from "@/components/intro/timeline";
 import { PortraitRings } from "./PortraitRings";
 
 export function Hero() {

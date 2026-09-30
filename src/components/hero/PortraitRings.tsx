@@ -8,7 +8,8 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { INTRO } from "./intro";
+import { useIntroReady } from "@/components/intro/IntroProvider";
+import { INTRO } from "@/components/intro/timeline";
 
 /*
  * Geometry is in Figma frame coordinates (node 444:365), so values can be
@@ -60,6 +61,7 @@ export function PortraitRings({ className }: { className?: string }) {
   const clipId = `${id}-shape`;
   const maskId = `${id}-reveal`;
   const reduceMotion = useReducedMotion();
+  const ready = useIntroReady();
 
   const rings = [useRingMotion(), useRingMotion(), useRingMotion()];
   const opacity = useMotionValue(0);
@@ -75,6 +77,7 @@ export function PortraitRings({ className }: { className?: string }) {
       revealCy.set(-1000);
       return;
     }
+    if (!ready) return; // wait for the loader
 
     const unsubscribe = rings[0].y.on("change", (offset) => {
       const cy = RING_REST_CY[0] + offset;
@@ -106,7 +109,7 @@ export function PortraitRings({ className }: { className?: string }) {
     };
     // Motion values are stable; run once on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduceMotion]);
+  }, [reduceMotion, ready]);
 
   return (
     <svg
