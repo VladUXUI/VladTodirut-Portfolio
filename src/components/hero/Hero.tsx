@@ -3,7 +3,7 @@ import { PortraitRings } from "./PortraitRings";
 
 export function Hero() {
   return (
-    <section className="relative mx-auto grid w-full max-w-[1728px] items-center gap-48 px-24 pt-96 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,720px)] lg:px-160 lg:pt-0">
+    <section className="relative mx-auto grid w-full max-w-[1728px] items-center gap-48 px-24 pt-128 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,720px)] lg:px-160 lg:pt-0">
       <div className="bg-dots pointer-events-none absolute inset-24 -z-10" aria-hidden />
 
       <div className="flex flex-col gap-40">
