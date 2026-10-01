@@ -4,8 +4,6 @@ import { BackToTop } from "./BackToTop";
 import { CopyEmail } from "./CopyEmail";
 
 export function Footer() {
-  const links = [...site.profiles, { label: "Resume", href: site.resume }];
-
   return (
     <footer id="contact" className="relative mt-160 border-t border-dot">
       <div className="bg-dots pointer-events-none absolute inset-0 -z-10" aria-hidden />
@@ -20,7 +18,7 @@ export function Footer() {
           <CopyEmail email={site.email} />
 
           <ul className="flex flex-wrap gap-x-48 gap-y-16">
-            {links.map((link) => (
+            {site.profiles.map((link) => (
               <li key={link.label}>
                 <a
                   href={link.href}
