@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Anonymous_Pro, DM_Sans } from "next/font/google";
+import { Footer } from "@/components/footer/Footer";
 import { IntroProvider } from "@/components/intro/IntroProvider";
 import { Loader } from "@/components/intro/Loader";
 import { MainMenu } from "@/components/nav/MainMenu";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <MainMenu />
           </header>
           {children}
+          <Footer />
         </IntroProvider>
       </body>
     </html>

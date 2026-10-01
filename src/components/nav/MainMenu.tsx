@@ -11,7 +11,7 @@ const ITEMS = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/work" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 const GLIDE = { type: "spring", stiffness: 420, damping: 34 } as const;
@@ -50,6 +50,14 @@ export function MainMenu() {
               <Link
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
+                onClick={(e) => {
+                  // In-page anchor (footer is on every page): scroll instead of jumping
+                  if (!item.href.startsWith("#")) return;
+                  e.preventDefault();
+                  document
+                    .querySelector(item.href)
+                    ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+                }}
                 onMouseEnter={() => setHovered(item.href)}
                 onFocus={() => setHovered(item.href)}
                 className={`relative block text-body transition-opacity duration-200 focus-visible:outline-none ${
