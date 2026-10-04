@@ -21,7 +21,7 @@ export function Meta({ items }: { items: { label: string; value: string | string
     <dl className="my-24 grid gap-40 border-y border-dot py-40 md:grid-cols-3">
       {items.map(({ label, value }) => (
         <div key={label} className="flex flex-col gap-12">
-          <dt className="text-label font-mono uppercase text-accent-lime">{label}</dt>
+          <dt className="text-label font-mono uppercase text-fg">{label}</dt>
           {(Array.isArray(value) ? value : [value]).map((line) => (
             <dd key={line} className="text-prose font-light">
               {line}
