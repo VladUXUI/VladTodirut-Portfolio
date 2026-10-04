@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { BeforeAfter } from "@/components/case-study/BeforeAfter";
-import { Figure, Meta, SectionTitle, Stat, Step } from "@/components/case-study/blocks";
+import { Figure, Meta, SectionTitle, Stat, Stats, Step } from "@/components/case-study/blocks";
 import { Video } from "@/components/case-study/Video";
 
 /* Styles for markdown in case studies, plus the blocks MDX can use directly */
@@ -14,6 +14,12 @@ const components: MDXComponents = {
       {...props}
     />
   ),
+  ol: (props) => (
+    <ol
+      className="flex max-w-[760px] list-decimal flex-col gap-8 pl-24 text-prose font-light text-fg-muted marker:text-fg"
+      {...props}
+    />
+  ),
   strong: (props) => <strong className="font-medium text-fg" {...props} />,
   a: (props) => (
     <a className="text-fg underline underline-offset-4 hover:text-accent-lime" {...props} />
@@ -23,6 +29,7 @@ const components: MDXComponents = {
   SectionTitle,
   Meta,
   Stat,
+  Stats,
   Figure,
   BeforeAfter,
   Step,

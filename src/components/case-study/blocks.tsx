@@ -35,17 +35,35 @@ export function Meta({ items }: { items: { label: string; value: string | string
 
 /* Headline number, e.g. $150M */
 export function Stat({ eyebrow, value, label }: { eyebrow: string; value: string; label: string }) {
+  return <Stats eyebrow={eyebrow} items={[{ value, label }]} />;
+}
+
+/* Several headline numbers side by side, e.g. -23% / -10s */
+export function Stats({
+  eyebrow,
+  items,
+}: {
+  eyebrow: string;
+  items: { value: string; label: string }[];
+}) {
   return (
     <div className="my-24 flex flex-col gap-8">
       <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
-      <span className="text-display font-medium">{value}</span>
-      <span className="text-body-lg font-light text-fg-muted">{label}</span>
+      <div className="flex flex-wrap gap-x-96 gap-y-24">
+        {items.map(({ value, label }) => (
+          <div key={label} className="flex flex-col gap-8">
+            <span className="text-display font-medium">{value}</span>
+            <span className="text-body-lg font-light text-fg-muted">{label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 /*
- * Image with optional caption; `narrow` keeps it at text width.
+ * Image with optional caption. Size: full column (default), `narrow` (text
+ * width) or `small` (inline illustrations, GIFs).
  * `rounded={false}` for transparent images whose content reaches the edges.
  */
 export function Figure({
@@ -53,21 +71,26 @@ export function Figure({
   alt,
   caption,
   narrow = false,
+  small = false,
   rounded = true,
 }: {
   src: StaticImageData;
   alt: string;
   caption?: string;
   narrow?: boolean;
+  small?: boolean;
   rounded?: boolean;
 }) {
+  const width = small ? "w-full max-w-[420px]" : narrow ? "mx-auto w-full max-w-[760px]" : "";
   return (
-    <figure className={`my-24 flex flex-col gap-12 ${narrow ? "mx-auto w-full max-w-[760px]" : ""}`}>
+    <figure className={`my-24 flex flex-col gap-12 ${width}`}>
       <Image
         src={src}
         alt={alt}
-        placeholder="blur"
-        sizes={narrow ? "(min-width: 800px) 760px, 100vw" : "(min-width: 1200px) 1100px, 100vw"}
+        placeholder={src.blurDataURL ? "blur" : "empty"}
+        sizes={
+          small ? "420px" : narrow ? "(min-width: 800px) 760px, 100vw" : "(min-width: 1200px) 1100px, 100vw"
+        }
         className={`h-auto w-full ${rounded ? "rounded-lg" : ""}`}
       />
       {caption && <figcaption className="text-body text-fg-dim">{caption}</figcaption>}

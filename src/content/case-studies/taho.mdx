@@ -1,0 +1,159 @@
+import hero from "./taho/hero.png";
+import thisIsFine from "./taho/this-is-fine.webp";
+import researchInsights from "./taho/research-insights.png";
+import wireframes from "./taho/wireframes.png";
+import modularFramework from "./taho/modular-framework.png";
+import screenAnatomy from "./taho/screen-anatomy.png";
+import molecules from "./taho/molecules.png";
+
+export const meta = {
+  summary: "Know what you sign. Redesigning transaction signing in the Taho wallet so people understand what they approve.",
+  hero,
+  heroAlt: "Taho wallet transaction signing screens",
+};
+
+<SectionTitle eyebrow="Intro">Know what you sign.</SectionTitle>
+
+<Meta
+  items={[
+    { label: "Role", value: "Design Lead" },
+    { label: "Business goal", value: ["Increase total active users", "Reduce support tickets by 50%"] },
+    {
+      label: "User needs",
+      value: ["Provide clarity when signing transactions", "Understand what I am signing"],
+    },
+  ]}
+/>
+
+<Stats
+  eyebrow="Final outcomes"
+  items={[
+    { value: "-23%", label: "Rejected transactions" },
+    { value: "-10s", label: "Time to sign" },
+  ]}
+/>
+
+---
+
+<SectionTitle eyebrow="The problem">Is it safe?</SectionTitle>
+
+Signing transactions in web3 can be scary.
+
+You're about to confirm something, but all you see is a wall of code, random hashes, or some vague text like "contract interaction".
+
+<Figure src={thisIsFine} alt="'This is fine' meme: a dog sipping coffee in a burning room" small rounded={false} />
+
+Most people (including me sometimes) just cross their fingers and hit sign, hoping nothing bad happens. But one bad signature and your wallet might be emptied in seconds. Not great.
+
+After talking to users (more on that below), it became pretty clear this wasn't just my own paranoia.
+
+I first ran into this issue when I designed MetaMask 10 years ago. Back then, just making it work was already a win. But now, with Taho, I had the chance to take another stab at this mess and try to make signing feel a bit more human. Or at least less terrifying.
+
+---
+
+<SectionTitle eyebrow="Insight">It's not.</SectionTitle>
+
+Before jumping into Figma, we wanted to make sure we actually understood what people were struggling with. Signing flows in web3 aren't exactly new, but they're still a huge pain point, so we started with some basic assumption mapping to guide our research.
+
+Once we mapped out what we thought users were struggling with, we ran a survey across our community, pulled feedback from social media, and went through discussions in our Discord to see how much of it matched reality. Spoiler: a lot of it did.
+
+<Figure src={researchInsights} alt="Assumption mapping and research insights about transaction signing" />
+
+Based on these insights, we defined a few key design goals that guided our exploration.
+
+---
+
+<SectionTitle eyebrow="Design goals">Make it clear</SectionTitle>
+
+<Step title="1. Make it human-readable">
+
+No more hex dumps or mystery contract interactions. Show people what they're actually signing in plain language, whenever possible.
+
+</Step>
+
+<Step title="2. Surface the real risks">
+
+Instead of just showing scary hashes, highlight what might happen if they sign. Are they giving unlimited access? Approving tokens? Signing something weird? Tell them.
+
+</Step>
+
+<Step title="3. Reduce blind trust">
+
+Help users verify who they're interacting with. Show contract names, known protocols, and anything that helps them connect the dots.
+
+</Step>
+
+<Step title="4. Keep it simple (but not dumb)">
+
+We didn't want to drown users in technical details, but we also didn't want to oversimplify things to the point of uselessness. The goal was: helpful, not patronizing.
+
+</Step>
+
+<Step title="5. Make it consistent">
+
+The signing experience should feel familiar across transaction types. No surprises if you're swapping tokens, staking, or minting NFTs.
+
+</Step>
+
+**With these principles in mind, it was time to open Figma and start exploring.**
+
+---
+
+<SectionTitle eyebrow="Solution">Make it clear & consistent</SectionTitle>
+
+Now that we knew what users needed (and what was technically possible), it was time to start actually designing. I started with a bunch of lo-fi wireframes, exploring different ways to structure the information: hierarchies, transaction details, progressive disclosure... all the good stuff.
+
+The goal here was to go wide first. I wanted to generate enough options that we could review, discuss, and pick apart as a team before committing to any direction. Wireframing at this stage also helped us focus on the flow and content hierarchy without getting distracted.
+
+<Figure src={wireframes} alt="Lo-fi wireframes exploring transaction signing layouts" />
+
+One of the ideas I explored was a multi-step signing process. It was an intriguing direction because it allowed us to give users more clarity without overwhelming them with too much information upfront. Progressive disclosure is usually a pretty solid principle in this kind of complex flow.
+
+But after some testing and team discussions, it became clear that this approach introduced too much friction. Users wanted to feel safe, but they also wanted to move quickly. Adding 2 or 3 steps to every signature slowed things down more than it helped. So while the idea had some good theory behind it, it didn't fit our real-world use case.
+
+Testing also validated our information architecture. Users' priorities when signing were:
+
+1. What am I signing?
+2. Who am I signing with?
+3. How is this affecting my wallet?
+
+A surprising side note: many users didn't care that much about the network fee, especially when interacting with L2 chains.
+
+---
+
+<SectionTitle eyebrow="Designing the solution">Build it.</SectionTitle>
+
+After reaching a conclusion on what we could build, what the users wanted and what helped our business goals, it was time to turn the wireframes into designs. Using our existing Design System, I built out a modular framework for the Sign TX screens. This allowed us to scale the patterns easily across different transaction types while keeping things consistent for users and engineers.
+
+<Figure src={modularFramework} alt="Modular framework for Sign TX screens" />
+
+Each screen would have the following components, making it easy for users to scan.
+
+<Figure src={screenAnatomy} alt="Anatomy of a Sign TX screen and its components" />
+
+I created a set of molecules to easily build up any variation of a sign transaction page that you would need, from Sign Message to approvals and multi-token LP-ing. This provided a clear path for any designer who wanted to incorporate a specific Sign TX screen in a flow, but more importantly it gave the engineering team a blueprint for building out the components.
+
+<Figure src={molecules} alt="Sign TX component molecules for different transaction types" />
+
+---
+
+<SectionTitle eyebrow="Results">What did we measure</SectionTitle>
+
+Before we started designing, we ran some light benchmarking to get a sense of where we were starting from and how we might measure success later on.
+
+We looked at:
+
+- **Time to sign:** On average, users took around 30 seconds to sign a transaction.
+- **Rejected transactions:** Around 35% of transactions were rejected. When we asked users about this, many told us they often rejected a transaction just to double-check things on the dApp side, since they didn't fully trust what the wallet was showing.
+
+This gave us a few useful metrics we could use to check if our redesign actually helped or if we were just moving pixels around for fun.
+
+In the end, we managed to bring signing time down from 30s to 22s and cut rejected transactions by two-thirds. While there's still work to be done, this gave us confidence that our changes made a real difference.
+
+---
+
+<SectionTitle eyebrow="Learnings">What did we miss</SectionTitle>
+
+Hats off to the engineering team at Taho. They pulled off a massive lift to make these improvements possible, from adding contract simulations to expanding the design system to support all the new flows.
+
+If there's one thing I wish we could've pushed further, it's error handling and better warnings. We had the basics (flagged contracts and fake websites), but there is much more that can be done. We had plans for it, but from a technical perspective it would've been an extra lift we couldn't take on at that time. It's definitely something I'd love to explore more in the next iteration.
