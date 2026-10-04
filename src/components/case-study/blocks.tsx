@@ -44,17 +44,22 @@ export function Stat({ eyebrow, value, label }: { eyebrow: string; value: string
   );
 }
 
-/* Image with optional caption; `narrow` keeps it at text width */
+/*
+ * Image with optional caption; `narrow` keeps it at text width.
+ * `rounded={false}` for transparent images whose content reaches the edges.
+ */
 export function Figure({
   src,
   alt,
   caption,
   narrow = false,
+  rounded = true,
 }: {
   src: StaticImageData;
   alt: string;
   caption?: string;
   narrow?: boolean;
+  rounded?: boolean;
 }) {
   return (
     <figure className={`my-24 flex flex-col gap-12 ${narrow ? "mx-auto w-full max-w-[760px]" : ""}`}>
@@ -63,7 +68,7 @@ export function Figure({
         alt={alt}
         placeholder="blur"
         sizes={narrow ? "(min-width: 800px) 760px, 100vw" : "(min-width: 1200px) 1100px, 100vw"}
-        className="h-auto w-full rounded-lg"
+        className={`h-auto w-full ${rounded ? "rounded-lg" : ""}`}
       />
       {caption && <figcaption className="text-body text-fg-dim">{caption}</figcaption>}
     </figure>
