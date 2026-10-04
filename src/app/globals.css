@@ -30,9 +30,8 @@
 
   /* Accents */
   --color-accent-blue: #0055ff; /* large text + decoration only (3.2:1 on bg) */
-  --color-accent-blue-soft: #6b9bff; /* blue for small text (6.7:1 on bg) */
   --color-accent-green: #02ae8f;
-  --color-accent-lime: #e6ff00;
+  --color-accent-lime: #e6ff00; /* rings, hovers, small highlighted text (16:1 on bg) */
   --color-accent-purple: #ac50e1; /* AI / Design System section */
 
   /* ---------- Spacing (8px grid) ----------

@@ -16,7 +16,6 @@ const colors = [
   ["tick", "bg-tick"],
   ["border-soft", "bg-border-soft"],
   ["accent-blue", "bg-accent-blue"],
-  ["accent-blue-soft", "bg-accent-blue-soft"],
   ["accent-green", "bg-accent-green"],
   ["accent-lime", "bg-accent-lime"],
 ] as const;
