@@ -14,6 +14,7 @@ export function Video({
   height,
   label,
   narrow = false,
+  className = "rounded-lg",
 }: {
   src: string;
   poster: string;
@@ -23,6 +24,8 @@ export function Video({
   label: string;
   /** Keep at text width (760px) instead of the full column */
   narrow?: boolean;
+  /** Extra classes for the video, e.g. a larger radius for heroes */
+  className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
@@ -42,7 +45,7 @@ export function Video({
   }, [reduce]);
 
   return (
-    <figure className={`my-24 ${narrow ? "w-full max-w-[760px]" : ""}`}>
+    <figure className={narrow ? "my-24 w-full max-w-[760px]" : "my-24"}>
       <video
         ref={ref}
         src={src}
@@ -54,7 +57,7 @@ export function Video({
         playsInline
         preload="metadata"
         aria-label={label}
-        className="h-auto w-full rounded-lg"
+        className={`h-auto w-full ${className}`}
       />
     </figure>
   );

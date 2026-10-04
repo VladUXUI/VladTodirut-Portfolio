@@ -6,6 +6,7 @@ import { aiProjects, productProjects } from "@/content/projects";
 import { caseStudySlugs, hasCaseStudy, loadCaseStudy } from "@/content/case-studies";
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { Container } from "@/components/ui/Container";
+import { Video } from "@/components/case-study/Video";
 
 const allProjects = [...productProjects, ...aiProjects];
 const pad = (n: number) => String(n + 1).padStart(2, "0");
@@ -55,14 +56,18 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
       </Container>
 
       <Container className="mt-64">
-        <Image
-          src={meta.hero}
-          alt={meta.heroAlt}
-          preload
-          placeholder="blur"
-          sizes="(min-width: 1728px) 1600px, 100vw"
-          className="h-auto w-full rounded-xl"
-        />
+        {meta.heroVideo ? (
+          <Video {...meta.heroVideo} label={meta.heroAlt} className="rounded-xl" />
+        ) : meta.hero ? (
+          <Image
+            src={meta.hero}
+            alt={meta.heroAlt}
+            preload
+            placeholder="blur"
+            sizes="(min-width: 1728px) 1600px, 100vw"
+            className="h-auto w-full rounded-xl"
+          />
+        ) : null}
       </Container>
 
       <Container as="section" className="mt-96">
