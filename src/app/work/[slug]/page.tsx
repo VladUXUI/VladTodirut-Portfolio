@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { aiProjects, productProjects } from "@/content/projects";
 import { caseStudySlugs, hasCaseStudy, loadCaseStudy } from "@/content/case-studies";
+import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { Container } from "@/components/ui/Container";
 
 const allProjects = [...productProjects, ...aiProjects];
@@ -46,6 +47,11 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
           <span className="text-body tracking-tag text-fg-dim">{project.tags}</span>
         </div>
         <h1 className="text-display font-medium text-accent-blue">{project.title}</h1>
+        {meta.link && (
+          <div>
+            <CaseStudyLink href={meta.link.href} label={meta.link.label} external />
+          </div>
+        )}
       </Container>
 
       <Container className="mt-64">

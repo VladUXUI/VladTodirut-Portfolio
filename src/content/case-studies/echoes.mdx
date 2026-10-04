@@ -1,0 +1,100 @@
+import hero from "./echoes/hero.png";
+import userFlow from "./echoes/user-flow.png";
+import wireframes from "./echoes/wireframes.png";
+import vibeExplorations from "./echoes/vibe-explorations.png";
+import screensIntro from "./echoes/screens-intro.png";
+import screensSetup from "./echoes/screens-setup.png";
+import screensPersona from "./echoes/screens-persona.png";
+import personaBusts from "./echoes/persona-busts.png";
+import personaCard from "./echoes/persona-card.png";
+import colorVariables from "./echoes/color-variables.png";
+import heatmaps from "./echoes/heatmaps.png";
+
+export const meta = {
+  summary: "Your music, your persona. A music app that turns listening into proof of fandom, and rewards it.",
+  hero,
+  heroAlt: "Echoes onboarding: clay music personas around the 'Congrats on your first points' screen",
+  link: {
+    label: "View prototype",
+    href: "https://www.figma.com/proto/a7hyDaqEPSPYTNb3swEl4a/Belong-APP?page-id=2009%3A337&node-id=2009-530&p=f&viewport=-77%2C-423%2C0.21&t=xDO5s2YRRG7eXFw2-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2009%3A530",
+  },
+};
+
+<SectionTitle eyebrow="Intro">Your music, your persona</SectionTitle>
+
+<Meta
+  items={[
+    { label: "Role", value: "Design Lead" },
+    { label: "Business goal", value: "Raise funds pre-build" },
+    {
+      label: "User needs",
+      value: ["Get exclusive access to artists", "Get rewarded for being a fan"],
+    },
+  ]}
+/>
+
+---
+
+<SectionTitle eyebrow="The problem">Real fan rewards are broken.</SectionTitle>
+
+In today's music ecosystem it's hard to prove you're actually a real fan and get rewarded for it. Most VIP tickets and exclusive drops get scooped up by bots or resellers. Fans who genuinely care about the music often get left behind.
+
+---
+
+<SectionTitle eyebrow="The idea">Prove it, reward it.</SectionTitle>
+
+Belong set out to change that. What if listening itself could become proof of fandom? What if your music taste and habits shaped a persona that grew with you?
+
+Instead of fighting bots at checkout, fans could earn recognition and rewards by simply doing what they already love: listening.
+
+I started with a persona, the onboarding user flow and annotated wireframes to go with it.
+
+<Figure src={userFlow} alt="Onboarding user flow" />
+
+<Figure src={wireframes} alt="Annotated onboarding wireframes" narrow />
+
+---
+
+<SectionTitle eyebrow="Designing the solution">What is the correct vibe?</SectionTitle>
+
+I explored different directions to figure out what the right vibe was.
+
+**Illustration style:** I experimented with multiple approaches before landing on a clay-like aesthetic. Clay felt more personal, more human, and tied directly to the idea of "building your persona."
+
+**Meaning of clay:** People associate clay with two stages of life. As kids, it's playful, messy, full of imagination. As adults, clay becomes pottery and art: something that lasts, something you craft and take pride in. That duality made it the perfect metaphor for Belong.
+
+<Figure src={vibeExplorations} alt="Illustration style explorations leading to the clay aesthetic" narrow />
+
+## Screens
+
+The visual system was paired with a **persona mechanic**:
+
+- Onboarding creates a starter persona. Minimal at first, just a color and a letter.
+- Connect Spotify and your persona instantly levels up. You see your taste start to shape the avatar.
+- Points, shown as a circle with a lightning bolt, accumulate as you listen. They feel like XP, not cash.
+
+And the key UX moment: after onboarding, you're greeted with "Your Persona is ready to rock" and instantly rewarded with your first points. A small, satisfying dopamine hit.
+
+<Figure src={screensIntro} alt="Intro screens: your love for music rewarded, collect points, your persona" narrow />
+
+<Figure src={screensSetup} alt="Account, genre and favorite artist setup screens" narrow />
+
+<Figure src={screensPersona} alt="Persona creation, first points reward and home screens" narrow />
+
+## Different artifacts
+
+<Figure src={personaBusts} alt="Clay persona busts for different music tastes" narrow />
+
+<Figure src={personaCard} alt="User persona card for Jasmine R." narrow />
+
+<Figure src={colorVariables} alt="Light and dark color variables" narrow />
+
+<Figure src={heatmaps} alt="Attention heatmap tests on onboarding screens" narrow />
+
+---
+
+<SectionTitle eyebrow="What's next">What is next?</SectionTitle>
+
+Echoes is in pre-seed phase, but the foundation is there: a music app that makes fandom visible and rewarding.
+
+It's not about streaks or reselling tickets. It's about listening, belonging, and showing the world who you are through your music.

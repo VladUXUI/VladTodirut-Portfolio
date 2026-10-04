@@ -7,10 +7,20 @@ import Link from "next/link";
  * Figma "BT_case": Default → hover (lime) → pressed (lime, hatch fills in).
  * Keyboard focus uses the hover look.
  */
-export function CaseStudyLink({ href, label = "View case study" }: { href: string; label?: string }) {
+export function CaseStudyLink({
+  href,
+  label = "View case study",
+  external = false,
+}: {
+  href: string;
+  label?: string;
+  /** Opens in a new tab (prototypes, live products) */
+  external?: boolean;
+}) {
   return (
     <Link
       href={href}
+      {...(external && { target: "_blank", rel: "noopener noreferrer" })}
       className="group inline-flex items-center gap-4 text-cta tracking-tag whitespace-nowrap text-fg transition-colors duration-150 hover:text-accent-lime focus-visible:text-accent-lime focus-visible:outline-none active:text-accent-lime"
     >
       {label}
