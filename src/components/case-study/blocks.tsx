@@ -38,7 +38,7 @@ export function Stat({ eyebrow, value, label }: { eyebrow: string; value: string
   return (
     <div className="my-24 flex flex-col gap-8">
       <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
-      <span className="text-display font-medium text-accent-blue">{value}</span>
+      <span className="text-display font-medium">{value}</span>
       <span className="text-body-lg font-light text-fg-muted">{label}</span>
     </div>
   );
