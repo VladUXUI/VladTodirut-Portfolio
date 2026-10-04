@@ -29,7 +29,8 @@
   --color-border-soft: rgb(255 255 255 / 0.6); /* tags */
 
   /* Accents */
-  --color-accent-blue: #0055ff;
+  --color-accent-blue: #0055ff; /* large text + decoration only (3.2:1 on bg) */
+  --color-accent-blue-soft: #6b9bff; /* blue for small text (6.7:1 on bg) */
   --color-accent-green: #02ae8f;
   --color-accent-lime: #e6ff00;
   --color-accent-purple: #ac50e1; /* AI / Design System section */
