@@ -5,11 +5,11 @@ import { Figure, Meta, SectionTitle, Stat, Step } from "@/components/case-study/
 /* Styles for markdown in case studies, plus the blocks MDX can use directly */
 const components: MDXComponents = {
   h2: (props) => <h2 className="mt-48 text-title-md font-medium" {...props} />,
-  h3: (props) => <h3 className="mt-24 text-body-lg font-light text-accent-lime" {...props} />,
+  h3: (props) => <h3 className="mt-24 text-body-lg font-light text-fg" {...props} />,
   p: (props) => <p className="max-w-[760px] text-prose font-light text-fg-muted" {...props} />,
   ul: (props) => (
     <ul
-      className="flex max-w-[760px] list-disc flex-col gap-8 pl-24 text-prose font-light text-fg-muted marker:text-accent-lime"
+      className="flex max-w-[760px] list-disc flex-col gap-8 pl-24 text-prose font-light text-fg-muted marker:text-fg"
       {...props}
     />
   ),

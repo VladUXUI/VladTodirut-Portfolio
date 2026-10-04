@@ -9,7 +9,7 @@ import Image, { type StaticImageData } from "next/image";
 export function SectionTitle({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {
   return (
     <div className="mt-48 flex flex-col gap-12 first:mt-0">
-      <span className="text-label font-mono uppercase text-fg-mono">{eyebrow}</span>
+      <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
       <h2 className="text-title-md font-medium">{children}</h2>
     </div>
   );
@@ -21,7 +21,7 @@ export function Meta({ items }: { items: { label: string; value: string | string
     <dl className="my-24 grid gap-40 border-y border-dot py-40 md:grid-cols-3">
       {items.map(({ label, value }) => (
         <div key={label} className="flex flex-col gap-12">
-          <dt className="text-label font-mono uppercase text-fg-mono">{label}</dt>
+          <dt className="text-label font-mono uppercase text-accent-lime">{label}</dt>
           {(Array.isArray(value) ? value : [value]).map((line) => (
             <dd key={line} className="text-prose font-light">
               {line}
@@ -37,7 +37,7 @@ export function Meta({ items }: { items: { label: string; value: string | string
 export function Stat({ eyebrow, value, label }: { eyebrow: string; value: string; label: string }) {
   return (
     <div className="my-24 flex flex-col gap-8">
-      <span className="text-label font-mono uppercase text-fg-mono">{eyebrow}</span>
+      <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
       <span className="text-display font-medium text-accent-blue">{value}</span>
       <span className="text-body-lg font-light text-fg-muted">{label}</span>
     </div>

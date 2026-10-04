@@ -69,7 +69,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         <div className="mx-auto flex max-w-[1100px] flex-wrap items-end justify-between gap-24 border-t border-dot pt-48">
           {next ? (
             <Link href={`/work/${next.slug}`} className="group flex flex-col gap-8">
-              <span className="text-label font-mono uppercase text-fg-mono">Next project</span>
+              <span className="text-label font-mono uppercase text-accent-lime">Next project</span>
               <span className="text-title-xl font-medium transition-colors group-hover:text-accent-lime">
                 {next.title} →
               </span>
