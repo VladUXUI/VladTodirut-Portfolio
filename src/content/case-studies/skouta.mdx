@@ -1,10 +1,13 @@
+import hero from "./skouta/hero.png";
+import onboardingFlow from "./skouta/onboarding-flow.png";
+import map from "./skouta/map.png";
+
 export const meta = {
   summary: "Know your ground. A civic alerts app for Sweden that I co-founded, designed, and built end to end with AI.",
-  heroAlt: "Skouta app screens",
+  hero,
+  heroAlt: "Skouta app widgets: outdoor conditions, area status, 7-day trend, last major event, closest incident and daily digest",
   link: { label: "skouta.app", href: "https://skouta.app" },
 };
-
-{/* IMAGE NEEDED: hero (key app screens with Pip) */}
 
 <SectionTitle eyebrow="Intro">Know your ground</SectionTitle>
 
@@ -23,10 +26,11 @@ There are two of us. My co-founder is a UX writer and content designer, and came
 />
 
 <Stats
+  small
   eyebrow="Where it stands"
   items={[
     { value: "~5 months", label: "From idea to the App Store" },
-    { value: "8", label: "Official sources, checked every 10–15 minutes" },
+    { value: "9", label: "Official sources, checked every 10–15 minutes" },
     { value: "~1,400", label: "Alerts tracked a week" },
   ]}
 />
@@ -37,14 +41,20 @@ There are two of us. My co-founder is a UX writer and content designer, and came
 
 A safety app can easily turn into an anxiety app. If your phone buzzes for everything, you either start worrying all the time or you turn notifications off, and then you miss the one alert that actually matters.
 
-So we split notifications into levels. Critical alerts always get pushed. Important ones only get pushed for the categories you picked. Minor ones never buzz at all, they go into the morning digest.
+So we split notifications into levels. Critical alerts always get pushed. Important ones only get pushed for the categories you picked. Minor ones never buzz at all, and they're not in the morning digest either. They're still in the app if you want them, for your location or on the map.
+
+<Figure
+  src={map}
+  alt="Skouta map view around Lake Mälaren, with alert markers coloured by level"
+  caption="The map view. Red is critical, yellow is important, blue is minor."
+/>
 
 {/* IMAGE NEEDED: notification settings + example push ("Södermalm · Police incident") */}
 
-The home screen works the same way. Before you see any feed, each saved location gets a simple status based on what's happening nearby, so most days you know if anything's going on at a glance.
+The home screen works the same way. Each saved location opens with a quick read of what's going on around it, before any feed: **All clear**, **Attention** or **Take care!**, with the number of incidents nearby. Pip changes with it too. Singing in front of a blue sun when it's quiet, yellow when there's something to keep an eye on, and red when it's critical. So most days you can tell how things are around you without reading anything.
 
-{/* NEEDS INPUT: confirm the status names (the app shows "Heads up"; older docs say All clear / Attention / Take care) */}
-{/* IMAGE NEEDED: home screen with location status */}
+{/* NEEDS INPUT: the homepage card shows "Heads up · A few incidents in your area". Is that a fourth state, or an older name? */}
+{/* IMAGE NEEDED: the three home statuses side by side (All clear / Attention / Take care!) */}
 
 ---
 
@@ -64,13 +74,32 @@ Skouta used to have a sign-up with a one-time code. PostHog showed some drop-off
 
 Now you open the app, pick your city and you're in, with 14 days of Premium to start. Premium is tied to your device or store account instead.
 
-{/* IMAGE NEEDED: onboarding, before and after removing sign-up */}
+<Figure
+  src={onboardingFlow}
+  alt="Onboarding flow: three selling points, add your city, then the removed steps (enter email, one-time code check, enter or resend code) before the final screen"
+  caption="The original onboarding. The greyed-out steps (email, one-time code, resend) are the ones we took out."
+  rounded={false}
+/>
 
 ---
 
-<SectionTitle eyebrow="Brand">Pip and the coral</SectionTitle>
+<SectionTitle eyebrow="Decision #4">What's free and what you pay for</SectionTitle>
 
-I designed the visual identity: the logo, the coral and dark palette, and Pip, a small bird who always knows first. The palette stands out in the Swedish App Store. I made Pip in a bunch of poses for the digest, empty states, loading and the paywall.
+Two things were never going behind the paywall: safety and translations. So everything you need to stay informed is free. That's every alert from every source, in English or Swedish, the map, all the filters, and critical notifications for one location.
+
+The harder part was finding the balance. The free version had to be good enough that people would actually install it and keep using it, and Premium still had to feel worth paying for. We went back and forth on that a lot.
+
+Where we landed is that Premium is about making Skouta fit your life. The biggest part is locations. You can follow up to five places you care about, like your kid's school, your parents' place, the summer house or the office, each with its own status and alerts around it. You also get notifications for the categories you pick, and the morning digest.
+
+Everyone gets two weeks of Premium when they start, so they can try all of it before deciding. We haven't tested the split with users yet, so for now it's our best call, and we'll see how people actually use it.
+
+{/* IMAGE NEEDED: saved locations screen with several places */}
+
+---
+
+<SectionTitle eyebrow="Brand">Pip and the orange</SectionTitle>
+
+I designed the visual identity: the logo, the orange and dark palette, and Pip, a small bird who always knows first. The palette stands out in the Swedish App Store. I made Pip in a bunch of poses for the digest, empty states, loading and the paywall.
 
 {/* IMAGE NEEDED: Pip variations + palette */}
 
@@ -78,7 +107,7 @@ I designed the visual identity: the logo, the coral and dark palette, and Pip, a
 
 <SectionTitle eyebrow="Building it">Building the whole thing myself</SectionTitle>
 
-I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend in Stockholm, fetchers that check eight official sources every 10–15 minutes, DeepL translation, push notifications, the paywall, and both store submissions.
+I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend in Stockholm, fetchers that check nine official sources every 10–15 minutes, DeepL translation, push notifications, the paywall, and both store submissions.
 
 Figma only has the core components (buttons, cards, toggles and so on). Everything else I designed straight in code.
 
