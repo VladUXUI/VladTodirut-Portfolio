@@ -1,0 +1,61 @@
+export const meta = {
+  summary: "How I use AI from market research to the App Store, and where I don't let it decide.",
+  heroAlt: "Working with AI",
+};
+
+<SectionTitle eyebrow="Working with AI">How I use AI, from research to the App Store</SectionTitle>
+
+I use AI in pretty much every part of building a product now. The best example is Skouta, a civic alerts app I co-founded. AI was involved in everything from the market research to the App Store submission, and I designed and built the whole thing myself.
+
+One thing I've learned along the way is not to let AI make the product and design decisions for me. It's fast, but it makes assumptions about what your product is, and it won't hold a product together on its own. That part is still my job.
+
+<Timeline
+  items={[
+    { label: "01", title: "Research", text: "Market fit, competitors, personas", href: "#research" },
+    { label: "02", title: "Design", text: "My first screens, then the full system", href: "#design" },
+    { label: "03", title: "Build & ship", text: "The whole stack, all the way to the stores", href: "#build" },
+    { label: "04", title: "Workflow", text: "Writing the decisions down", href: "#workflow" },
+  ]}
+/>
+
+---
+
+<SectionTitle eyebrow="01" id="research">Research</SectionTitle>
+
+Before building Skouta, I used AI to look at market fit, go through competitors and research the people we'd be building for, then turn all of that into target personas.
+
+It's quick, but it fills the gaps with its own assumptions about what the product is. So I always check what it gives me against what we actually know before using any of it.
+
+{/* IMAGE NEEDED: competitor analysis or persona output */}
+
+---
+
+<SectionTitle eyebrow="02" id="design">Design</SectionTitle>
+
+On Skouta, I designed the first few screens and set up the tokens in Figma myself. From there, AI built out the components and the rest of the design system in code.
+
+On Peanut, I used AI to audit the existing app, to build a small website showing the team where their design system had drifted, and to rebuild the components and documentation in Figma. [More on that on the design systems page →](/work/design-system)
+
+Where AI still struggles is keeping things consistent from one page to the next. It can make a good screen, but making the whole product feel like one thing is still a design job.
+
+{/* IMAGE NEEDED: Skouta first screens / token system next to the built app */}
+
+---
+
+<SectionTitle eyebrow="03" id="build">Build & ship</SectionTitle>
+
+I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend, fetchers that check eight official sources, translation, push notifications, the paywall, and both store submissions. It's live on iOS and Android. [Read the Skouta case study →](/work/skouta)
+
+For Thrive Protocol, a platform that automates treasury allocations to builders in web3 ecosystems, I designed and shipped a data-heavy product for evaluating proposals. It was built entirely with Lovable, working closely with the founders and engineering.
+
+{/* IMAGE NEEDED: Thrive Protocol product screens */}
+{/* NEEDS INPUT: one detail on Thrive (what was hard, or what Lovable made possible) */}
+
+---
+
+<SectionTitle eyebrow="04" id="workflow">Workflow</SectionTitle>
+
+When AI writes most of the code, the reasoning behind it only exists if you write it down. For Skouta, we keep one shared context document with what the product is, who it's for, the voice, the data sources and the decisions behind it. Every AI session starts from that, whether it's design, code or marketing.
+
+{/* IMAGE NEEDED: excerpt of the context doc or decision log */}
+{/* NEEDS INPUT: other workflow tools worth naming (e.g. custom skills, Figma + AI setup) */}

@@ -136,7 +136,7 @@ function DesktopWorks({
           }`}
         >
           <div className={imageSide === "right" ? "order-last" : undefined}>
-            <ProjectImageStack projects={projects} position={position} />
+            <ProjectImageStack projects={projects} position={position} active={active} />
           </div>
 
           <ol className="flex flex-col">
@@ -161,14 +161,16 @@ function DesktopWorks({
 function ProjectImageStack({
   projects,
   position,
+  active,
 }: {
   projects: Project[];
   position: MotionValue<number>;
+  active: number;
 }) {
   return (
     <div className="relative aspect-[752/766] w-full">
       {projects.map((project, i) => (
-        <ImageLayer key={project.slug} project={project} index={i} position={position} />
+        <ImageLayer key={project.slug} project={project} index={i} position={position} active={i === active} />
       ))}
     </div>
   );
@@ -178,10 +180,12 @@ function ImageLayer({
   project,
   index,
   position,
+  active,
 }: {
   project: Project;
   index: number;
   position: MotionValue<number>;
+  active: boolean;
 }) {
   const reduce = useReducedMotion();
   const wipe = reduce ? 0.001 : WIPE_WINDOW;
@@ -196,7 +200,7 @@ function ImageLayer({
   return (
     <motion.div className="absolute inset-0" style={{ clipPath, zIndex: index }}>
       <motion.div className="absolute inset-0" style={{ scale }}>
-        <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} />
+        <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} active={active} />
       </motion.div>
     </motion.div>
   );

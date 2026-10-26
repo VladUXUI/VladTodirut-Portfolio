@@ -31,8 +31,6 @@ const GAP = 96;
 const IMAGE_RATIO = "1258 / 575";
 const CARD_WIDTH = `min(1258px, 72vw, calc((100dvh - 440px) * ${IMAGE_RATIO}))`;
 
-const pad = (n: number) => String(n + 1).padStart(2, "0");
-
 export function HorizontalShowcase({
   id,
   title,
@@ -123,7 +121,6 @@ function PinnedTrack({ projects }: { projects: Project[] }) {
               key={project.slug}
               ref={i === 0 ? firstCardRef : undefined}
               project={project}
-              index={i}
               active={i === active}
               onFocus={() => goTo(i)}
               style={{ width: CARD_WIDTH }}
@@ -135,18 +132,17 @@ function PinnedTrack({ projects }: { projects: Project[] }) {
   );
 }
 
-/* ---------- Mobile + reduced motion: native swipe carousel ---------- */
+/* ---------- Mobile: stacked cards. Desktop with reduced motion: native swipe carousel ---------- */
 
 function SwipeTrack({ projects }: { projects: Project[] }) {
   return (
-    <div className="-mx-24 mt-48 flex snap-x snap-mandatory scroll-px-24 gap-24 overflow-x-auto px-24 pb-16 lg:scroll-px-64 [scrollbar-width:none] lg:-mx-64 lg:mt-64 lg:gap-96 lg:px-64 lg:motion-safe:hidden">
-      {projects.map((project, i) => (
+    <div className="mt-48 flex flex-col gap-64 lg:-mx-64 lg:mt-64 lg:snap-x lg:snap-mandatory lg:scroll-px-64 lg:flex-row lg:gap-96 lg:overflow-x-auto lg:px-64 lg:pb-16 lg:[scrollbar-width:none] lg:motion-safe:hidden">
+      {projects.map((project) => (
         <Card
           key={project.slug}
           project={project}
-          index={i}
           active
-          className="w-[85%] snap-start lg:w-[72%]"
+          className="w-full lg:w-[72%] lg:snap-start"
         />
       ))}
     </div>
@@ -158,7 +154,6 @@ function SwipeTrack({ projects }: { projects: Project[] }) {
 function Card({
   ref,
   project,
-  index,
   active,
   onFocus,
   className = "",
@@ -166,7 +161,6 @@ function Card({
 }: {
   ref?: React.Ref<HTMLElement>;
   project: Project;
-  index: number;
   active: boolean;
   onFocus?: () => void;
   className?: string;
@@ -180,12 +174,11 @@ function Card({
       className={`shrink-0 transition-opacity duration-500 ${active ? "opacity-100" : "opacity-20"} ${className}`}
     >
       <div className="relative w-full" style={{ aspectRatio: IMAGE_RATIO }}>
-        <ProjectVisual project={project} sizes="(min-width: 1024px) 72vw, 85vw" fit="cover" />
+        <ProjectVisual project={project} sizes="(min-width: 1024px) 72vw, 85vw" fit="cover" rounded={false} />
       </div>
 
       <div className="mt-24 max-w-[1126px] border-b border-dot">
-        <div className="flex items-baseline gap-24 py-16 lg:gap-48">
-          <span className="w-32 shrink-0 text-body font-medium text-fg-dim">{pad(index)}.</span>
+        <div className="py-16">
           <h3
             className={`text-title-xl font-medium transition-colors duration-500 ${
               active ? "text-accent-purple" : "text-fg"
@@ -194,11 +187,11 @@ function Card({
             {project.title}
           </h3>
         </div>
-        <div className="flex flex-col items-start gap-32 pb-40 pl-56 lg:pl-80">
+        <div className="flex flex-col items-start gap-32 pb-40">
           <p className="max-w-[613px] text-body font-light tracking-tag text-fg-dim">
             {project.description}
           </p>
-          <CaseStudyLink href={`/work/${project.slug}`} />
+          <CaseStudyLink href={`/work/${project.slug}`} label={project.cta} />
         </div>
       </div>
     </article>

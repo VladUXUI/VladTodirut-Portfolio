@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 import type { StaticImageData } from "next/image";
 
 /* Projects that have a written case study (src/content/case-studies/<slug>.mdx) */
-export const caseStudySlugs = ["mezo", "echoes", "taho", "subscape"] as const;
+export const caseStudySlugs = ["mezo", "echoes", "taho", "subscape", "skouta", "design-system", "working-with-ai"] as const;
 
 export type CaseStudyMeta = {
   summary: string;

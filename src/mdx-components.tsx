@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { BeforeAfter } from "@/components/case-study/BeforeAfter";
-import { Figure, Meta, SectionTitle, Stat, Stats, Step } from "@/components/case-study/blocks";
+import { Figure, Meta, SectionTitle, Stat, Stats, Step, Timeline } from "@/components/case-study/blocks";
 import { Video } from "@/components/case-study/Video";
 
 /* Styles for markdown in case studies, plus the blocks MDX can use directly */
@@ -33,6 +33,7 @@ const components: MDXComponents = {
   Figure,
   BeforeAfter,
   Step,
+  Timeline,
   Video,
 };
 

@@ -1,0 +1,95 @@
+/*
+ * Pip, Skouta's bird, walking in place and singing. Coordinates are in the
+ * SVG's own 469 × 530 space (transform-box: view-box).
+ */
+.pip {
+  overflow: visible;
+}
+
+.pip * {
+  transform-box: view-box;
+}
+
+/* Walk: both legs swing the same way (positive = foot toward the beak), half a step apart */
+.legLeft {
+  transform-origin: 236px 450px;
+  animation: swingLeft 0.9s linear infinite;
+}
+.legRight {
+  transform-origin: 277px 450px;
+  animation: swingRight 0.9s linear -0.45s infinite;
+}
+@keyframes swingLeft {
+  0%, 100% { transform: rotate(4deg); }
+  25% { transform: rotate(-12deg); }
+  50% { transform: rotate(-28deg); }
+  75% { transform: rotate(-12deg); }
+}
+@keyframes swingRight {
+  0%, 100% { transform: rotate(28deg); }
+  25% { transform: rotate(12deg); }
+  50% { transform: rotate(-4deg); }
+  75% { transform: rotate(12deg); }
+}
+
+/* Small bob, twice per walk cycle */
+.body {
+  animation: bob 0.45s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Beak opens and closes from where it meets the head */
+.beakTop {
+  transform-origin: 136px 116px;
+  animation: beakTop 1.2s ease-in-out infinite;
+}
+.beakBottom {
+  transform-origin: 140px 170px;
+  animation: beakBottom 1.2s ease-in-out infinite;
+}
+@keyframes beakTop {
+  0%, 60%, 100% { transform: rotate(0); }
+  25% { transform: rotate(6deg); }
+}
+@keyframes beakBottom {
+  0%, 60%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg); }
+}
+
+/*
+ * One note per beak opening: leaves the mouth small, drifts up with a slight
+ * wobble and tilt while growing, and fades as the next one comes out.
+ */
+.note {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: note 2.4s linear infinite;
+}
+.noteA {
+  animation-delay: 0.25s;
+}
+.noteB {
+  animation-delay: 1.45s;
+}
+@keyframes note {
+  0% { opacity: 0; transform: translate(22px, 10px) scale(0.4) rotate(-12deg); }
+  6% { opacity: 1; }
+  20% { transform: translate(8px, -25px) scale(0.8) rotate(6deg); }
+  35% { transform: translate(-6px, -60px) scale(1.15) rotate(-6deg); }
+  48% { opacity: 1; }
+  50% { transform: translate(-2px, -90px) scale(1.45) rotate(8deg); }
+  60%, 100% { opacity: 0; transform: translate(-10px, -110px) scale(1.6) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pip * {
+    animation: none !important;
+  }
+  .noteA {
+    opacity: 1;
+  }
+}

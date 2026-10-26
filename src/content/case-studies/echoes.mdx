@@ -1,17 +1,13 @@
 import hero from "./echoes/hero.png";
-import userFlow from "./echoes/user-flow.png";
-import wireframes from "./echoes/wireframes.png";
 import vibeExplorations from "./echoes/vibe-explorations.png";
 import screensIntro from "./echoes/screens-intro.png";
 import screensSetup from "./echoes/screens-setup.png";
 import screensPersona from "./echoes/screens-persona.png";
 import personaBusts from "./echoes/persona-busts.png";
-import personaCard from "./echoes/persona-card.png";
-import colorVariables from "./echoes/color-variables.png";
 import heatmaps from "./echoes/heatmaps.png";
 
 export const meta = {
-  summary: "Your music, your persona. A music app that turns listening into proof of fandom, and rewards it.",
+  summary: "Designing how a music app turns listening into proof of fandom, from the core mechanic to the clay visual language.",
   hero,
   heroAlt: "Echoes onboarding: clay music personas around the 'Congrats on your first points' screen",
   link: {
@@ -22,79 +18,74 @@ export const meta = {
 
 <SectionTitle eyebrow="Intro">Your music, your persona</SectionTitle>
 
+A client came to me with a new product idea. In music right now, it's really hard to prove you're actually a fan, let alone get rewarded for it. VIP tickets and exclusive drops get scooped up by bots and resellers, and the people who really care about the music get left behind.
+
+Their idea: what if listening itself could be the proof? They needed a prototype to pitch Echoes, and to get their core team on the same page about what it would be.
+
+I was the only designer. The client brought the problem, and I came up with the product around it: the persona, the points system, the onboarding and the clay look.
+
 <Meta
   items={[
-    { label: "Role", value: "Design Lead" },
-    { label: "Business goal", value: "Raise funds pre-build" },
-    {
-      label: "User needs",
-      value: ["Get exclusive access to artists", "Get rewarded for being a fan"],
-    },
+    { label: "Role", value: ["Sole designer", "Client project"] },
+    { label: "Year", value: "2025" },
+    { label: "Output", value: ["Clickable pitch prototype", "Onboarding + core mechanic"] },
   ]}
 />
 
 ---
 
-<SectionTitle eyebrow="The problem">Real fan rewards are broken.</SectionTitle>
+<SectionTitle eyebrow="Decision #1">A persona that grows with your taste</SectionTitle>
 
-In today's music ecosystem it's hard to prove you're actually a real fan and get rewarded for it. Most VIP tickets and exclusive drops get scooped up by bots or resellers. Fans who genuinely care about the music often get left behind.
+Listening history is invisible, and "proof of fandom" is pretty abstract. I wanted something people could actually see, feel is theirs, and want to grow.
 
----
+So onboarding gives you a starter persona. It's very basic at first, just a colour and a letter. Connect Spotify and it levels up straight away, and you can see your taste start to shape it.
 
-<SectionTitle eyebrow="The idea">Prove it, reward it.</SectionTitle>
-
-Belong set out to change that. What if listening itself could become proof of fandom? What if your music taste and habits shaped a persona that grew with you?
-
-Instead of fighting bots at checkout, fans could earn recognition and rewards by simply doing what they already love: listening.
-
-I started with a persona, the onboarding user flow and annotated wireframes to go with it.
-
-<Figure src={userFlow} alt="Onboarding user flow" />
-
-<Figure src={wireframes} alt="Annotated onboarding wireframes" narrow />
+<Figure src={personaBusts} alt="Clay persona busts for different music tastes" narrow caption="Different tastes, different personas." />
 
 ---
 
-<SectionTitle eyebrow="Designing the solution">What is the correct vibe?</SectionTitle>
+<SectionTitle eyebrow="Decision #2">Points that work like XP</SectionTitle>
 
-I explored different directions to figure out what the right vibe was.
+Points in a rewards app usually work like money: save them up, spend them on a cheaper ticket. That's not what we wanted here.
 
-**Illustration style:** I experimented with multiple approaches before landing on a clay-like aesthetic. Clay felt more personal, more human, and tied directly to the idea of "building your persona."
+In Echoes, bands and artists reward real fans based on their XP. So points are more like a reputation score than a currency, and that's why they look like XP (a circle with a lightning bolt) instead of coins. If you could just spend them, you'd end up with the same buying and reselling the product is trying to get away from.
 
-**Meaning of clay:** People associate clay with two stages of life. As kids, it's playful, messy, full of imagination. As adults, clay becomes pottery and art: something that lasts, something you craft and take pride in. That duality made it the perfect metaphor for Belong.
+---
 
-<Figure src={vibeExplorations} alt="Illustration style explorations leading to the clay aesthetic" narrow rounded={false} />
+<SectionTitle eyebrow="Decision #3">A reward straight after onboarding</SectionTitle>
 
-## Screens
-
-The visual system was paired with a **persona mechanic**:
-
-- Onboarding creates a starter persona. Minimal at first, just a color and a letter.
-- Connect Spotify and your persona instantly levels up. You see your taste start to shape the avatar.
-- Points, shown as a circle with a lightning bolt, accumulate as you listen. They feel like XP, not cash.
-
-And the key UX moment: after onboarding, you're greeted with "Your Persona is ready to rock" and instantly rewarded with your first points. A small, satisfying dopamine hit.
+Onboarding ends with "Your Persona is ready to rock" and your first points, straight away. A small, satisfying dopamine hit before we ask you for anything else.
 
 <Figure src={screensIntro} alt="Intro screens: your love for music rewarded, collect points, your persona" narrow rounded={false} />
 
 <Figure src={screensSetup} alt="Account, genre and favorite artist setup screens" narrow rounded={false} />
 
-<Figure src={screensPersona} alt="Persona creation, first points reward and home screens" narrow rounded={false} />
-
-## Different artifacts
-
-<Figure src={personaBusts} alt="Clay persona busts for different music tastes" narrow />
-
-<Figure src={personaCard} alt="User persona card for Jasmine R." narrow rounded={false} />
-
-<Figure src={colorVariables} alt="Light and dark color variables" narrow />
-
-<Figure src={heatmaps} alt="Attention heatmap tests on onboarding screens" narrow rounded={false} />
+<Figure src={screensPersona} alt="Persona creation, first points reward and home screens" narrow rounded={false} caption="Your persona is ready, and your first points land right away." />
 
 ---
 
-<SectionTitle eyebrow="What's next">What is next?</SectionTitle>
+<SectionTitle eyebrow="Decision #4">Why clay</SectionTitle>
 
-Echoes is in pre-seed phase, but the foundation is there: a music app that makes fandom visible and rewarding.
+I tried a few styles before landing on clay. The glossy, glass-like 3D looked nice but didn't feel personal. The flat confetti, cartoon headphones and bright clay notes felt a bit too childish.
 
-It's not about streaks or reselling tickets. It's about listening, belonging, and showing the world who you are through your music.
+Textured clay felt more personal and more human. People connect clay with two stages of life. As kids it's playful and messy, and as adults it turns into pottery and art, something you make and are proud of. That fit the idea of a persona you build over time really well.
+
+<Figure src={vibeExplorations} alt="Illustration style explorations leading to the clay aesthetic" narrow rounded={false} caption="Not personal enough on the left, a bit too childish in the middle, clay on the right." />
+
+I also ran the main screens through an AI attention tool to check people would look where I wanted them to. The intro and perks screens scored 94 and 97 for focus. The email step only got 67, so that's the first screen I'd go back to.
+
+<Figure src={heatmaps} alt="AI attention heatmaps on onboarding screens" narrow rounded={false} caption="AI attention check. Focus scores: intro 94, perks 97, email step 67." />
+
+---
+
+<SectionTitle eyebrow="Outcome">What happened with it</SectionTitle>
+
+The client used the prototype to pitch Echoes, and to get their core team aligned on what the product is.
+
+---
+
+<SectionTitle eyebrow="Reflection">Looking back</SectionTitle>
+
+The most fun part was using AI to create the clay personas. Instead of drawing a fixed set of avatars, I could play with a persona that changes as your music taste changes, and that made the whole idea much easier to get in a pitch.
+
+The big question a prototype can't answer is whether fans actually care about being recognised for their XP, and whether artists would use it. That's the first thing I'd want to test with real people.

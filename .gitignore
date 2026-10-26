@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local working files (briefs, CV, product context), kept out of the public repo
+/docs/
+/.claude/
+
+# old case study drafts, already in git history
+/src/content/case-studies/*-v1-backup.mdx
+
+# unused media
+/public/images/work/echoes.mov
+/public/images/work/Mezo/Frame 1321316528.png

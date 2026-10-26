@@ -1,0 +1,84 @@
+import modularFramework from "./taho/modular-framework.png";
+import molecules from "./taho/molecules.png";
+
+export const meta = {
+  summary: "How I build design systems now, and where each part of that came from: Taho, Mezo, Peanut and TokenFoundry.",
+  heroAlt: "Design systems",
+};
+
+<SectionTitle eyebrow="Design Systems">How I build design systems now</SectionTitle>
+
+I've done design systems a few different ways over the years. I built one from scratch at Taho, used Uber's at Mezo, and spent most of my time at Peanut cleaning one up. This is how I do it now, and where each part of it came from.
+
+<Timeline
+  items={[
+    { label: "01", title: "Brand", text: "Where everything starts", href: "#brand" },
+    { label: "02", title: "Tokens & first pages", text: "Tokens with AI, pages by hand", href: "#tokens" },
+    { label: "03", title: "Code", text: "Components built with AI, checked against Figma", href: "#code" },
+    { label: "04", title: "Docs", text: "Documentation, and keeping an eye on usage", href: "#docs" },
+  ]}
+/>
+
+---
+
+<SectionTitle eyebrow="01" id="brand">It starts with the brand</SectionTitle>
+
+Before any tokens or components, I start from the brand. The colours, type and shapes should come from what the product is.
+
+I learned that one at Mezo. We used Uber's design system, which got us going faster, but it came with a bigger learning curve, and it wasn't really built for crypto. Crypto has some specific needs, and we kept having to work around them with components that were made for something else.
+
+{/* NEEDS INPUT: one concrete example of a crypto need the Uber system didn't cover */}
+{/* IMAGE NEEDED: Mezo component adapted from the Uber system */}
+
+---
+
+<SectionTitle eyebrow="02" id="tokens">Tokens, then a couple of real pages</SectionTitle>
+
+I set up the tokens in Figma with AI: colour, type, spacing, radius. Then I design one or two pages by hand, using only those tokens. That's the part I don't hand over, because that's where most of the design decisions get made. Once the pages feel right, AI helps me pull the repeating bits out into components and patterns.
+
+At Taho I did all of this by hand. I was the only product designer, so I built the whole system from scratch in Figma, then reviewed each component once the developers had built it. It worked (Taho grew to around 150,000 active users), but it was time consuming, lengthy and very repetitive. [Read the Taho case study →](/work/taho)
+
+<Figure src={modularFramework} alt="Modular framework for Taho's transaction signing screens" />
+
+<Figure src={molecules} alt="Taho signing screen molecules for different transaction types" />
+
+---
+
+<SectionTitle eyebrow="03" id="code">Getting it into code</SectionTitle>
+
+Next, the tokens and components go into code, again with AI, and I check that they match Figma.
+
+TokenFoundry came out of this step. Earlier this year, AI kept drifting when it turned designs into code, so I built a Figma plugin and a preview site that turn design tokens into a React + Tailwind design system. It meant less drift and less back and forth. The tools have caught up since, so I don't really need it anymore, but I still start from tokens.
+
+{/* NEEDS INPUT: TokenFoundry GitHub link */}
+{/* IMAGE NEEDED: TokenFoundry plugin + generated preview site */}
+
+Skouta was built this way. Figma only has the core components, and the rest lives in code. [Read the Skouta case study →](/work/skouta)
+
+---
+
+<SectionTitle eyebrow="04" id="docs">Docs, and keeping an eye on it</SectionTitle>
+
+Every system gets a documentation website with the design resources and the code, plus a `DesignSystem.md` file. I also check how much the system is actually used, and by who.
+
+That part comes from Peanut, a fintech app with a crypto component. When I joined as their designer, they already had a style and a design system, which was a nice head start. But it had drifted a lot: components used for things they weren't meant for, lots of versions of the same thing, and plenty of accessibility issues. Most of my time went into wrangling all of it and cleaning it up.
+
+I used AI to audit the app and build a small website to show the team where the drift was. Then I rebuilt the components and the docs in Figma, and we agreed when to use modals, drawers and notifications.
+
+<Stats
+  eyebrow="Peanut, before → after"
+  items={[
+    { value: "12 → 4", label: "Button variants" },
+    { value: "6 → 1", label: "Input designs" },
+    { value: "24 → 1", label: "Card versions, now one card system" },
+  ]}
+/>
+
+Everything passes WCAG AA now.
+
+{/* IMAGE NEEDED: Peanut audit website screenshot */}
+{/* IMAGE NEEDED: before/after component sheets (buttons, inputs) */}
+
+---
+
+This is how I do it today. It changes pretty much daily, so ask me again in a month.
