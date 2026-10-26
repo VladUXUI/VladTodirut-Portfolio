@@ -50,9 +50,12 @@ export function Stat({ eyebrow, value, label }: { eyebrow: string; value: string
 export function Stats({
   eyebrow,
   items,
+  small = false,
 }: {
   eyebrow: string;
   items: { value: string; label: string }[];
+  /** Smaller numbers, for context stats that shouldn't shout */
+  small?: boolean;
 }) {
   return (
     <div className="my-24 flex flex-col gap-8">
@@ -60,7 +63,7 @@ export function Stats({
       <div className="flex flex-wrap gap-x-96 gap-y-24">
         {items.map(({ value, label }) => (
           <div key={label} className="flex flex-col gap-8">
-            <span className="text-display font-medium">{value}</span>
+            <span className={`${small ? "text-title-xl" : "text-display"} font-medium`}>{value}</span>
             <span className="text-body-lg font-light text-fg-muted">{label}</span>
           </div>
         ))}

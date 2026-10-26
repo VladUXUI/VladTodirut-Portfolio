@@ -196,9 +196,12 @@ function ImageLayer({
   );
   const clipPath = useTransform(reveal, (r) => `inset(${(1 - r) * 100}% 0% 0% 0% round 40px)`);
   const scale = useTransform(reveal, [0, 1], [1.08, 1]);
+  // Once the next image has fully wiped in, hide this one so its edges can't
+  // show through the anti-aliased corners of the image on top
+  const covered = useTransform(position, (p) => (p >= index + 1 + wipe / 2 ? "hidden" : "visible"));
 
   return (
-    <motion.div className="absolute inset-0" style={{ clipPath, zIndex: index }}>
+    <motion.div className="absolute inset-0" style={{ clipPath, zIndex: index, visibility: covered }}>
       <motion.div className="absolute inset-0" style={{ scale }}>
         <ProjectVisual project={project} sizes={DESKTOP_IMAGE_SIZES} active={active} />
       </motion.div>
