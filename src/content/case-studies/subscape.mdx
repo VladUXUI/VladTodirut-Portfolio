@@ -13,60 +13,51 @@ export const meta = {
   },
 };
 
-<SectionTitle eyebrow="Intro">Play to govern.</SectionTitle>
+<SectionTitle eyebrow="Intro">Play to govern</SectionTitle>
+
+DAO governance is usually boring. Voting dashboards, endless proposals, and a handful of whales making all the decisions. Not exactly engaging. You vote, you don't really see how your vote changed the outcome, and for a lot of votes there's no reward at all.
+
+Subscape was Taho Wallet's attempt to fix that: what if taking part in governance felt more like playing a strategy game than filling out a ballot?
+
+Our head of product came up with the game mechanics. I designed everything people actually saw and used: the product UI, the brand (including the name Subscape), The Island, and Scout, the guide.
 
 <Meta
   items={[
     { label: "Role", value: "Product & Brand Designer" },
-    {
-      label: "Business goal",
-      value: ["Increase Taho Wallet MAU by 20%", "30% retention S1 to S2", "10 Realms"],
-    },
+    { label: "Business goal", value: ["Grow Taho Wallet MAU", "Launch with 10 Realms"] },
     {
       label: "User needs",
-      value: ["Have fun with the boring task of voting", "Make me feel part of a community"],
+      value: ["Make voting worth my time", "Feel part of a community"],
     },
   ]}
 />
 
 <Stats
-  eyebrow="Final results"
+  eyebrow="Beta results (6 weeks)"
   items={[
+    { value: "60k", label: "Players joined a Realm" },
+    { value: "6 min", label: "Average session" },
     { value: "7", label: "Realms" },
-    { value: "6 min", label: "Session duration" },
-    { value: "60k", label: "Population" },
   ]}
 />
 
 ---
 
-<SectionTitle eyebrow="The idea & challenge">Make governance fun and engaging.</SectionTitle>
+<SectionTitle eyebrow="The challenge">Making it a game without making it a gimmick</SectionTitle>
 
-Subscape is a sub-brand of Taho Wallet.
+The mechanics were already a proper system. You join one of several **Realms**, each one a subDAO with its own identity and members. You earn XP by completing **quests** and staking TAHO, and the more active a Realm is, the bigger its share of token emissions.
 
-DAO governance is usually boring. Voting dashboards, endless proposals, and a handful of whales making all the decisions. Not exactly engaging.
+My job was to make all that feel simple and alive. The hard part was obvious from the start: how do you gamify governance without it feeling like a gimmick? A few things kept coming up:
 
-With Subscape, we wanted to make governance feel alive. What if participating in the DAO felt more like playing a strategy game than filling out a ballot?
-
-The hard part was obvious: how do you gamify governance without making it feel like a gimmick?
-
-- **Complex mechanics scare people away.** Most folks don't want to learn a whole new game just to stake tokens.
-- **Governance usually feels thankless.** You vote, you click, nothing changes for you personally.
-- **Engagement is fragile.** A shiny new system can spike participation at first, but if it's shallow, people churn fast.
-
-So the challenge was: design a system that feels playful but still meaningful, with real stakes and a reason to keep coming back.
+- Most people don't want to learn a whole new game just to stake tokens.
+- Voting feels thankless. You vote, you click, nothing changes for you personally.
+- A shiny new system can spike participation, but if it's shallow, people leave just as fast.
 
 ---
 
-<SectionTitle eyebrow="The design">Feel part of something.</SectionTitle>
+<SectionTitle eyebrow="Decision #1">A map as the home screen</SectionTitle>
 
-Subscape is a **map-control game.**
-
-- Users join one of several **Realms**. Each Realm is a subDAO with its own identity and members.
-- By completing **quests** and staking TAHO, users earn XP. The more active the Realm, the bigger its share of token emissions.
-- **XP** isn't just a number. It's the basis for rewards, status, and influence inside the Realm.
-
-The design leaned into light strategy mechanics: map control, community identity, and friendly competition. Enough to make things interesting without overloading users with complexity.
+We looked at other options, but we wanted this to be a game, and a map made the most sense for that. So Subscape opens on The Island, where each Realm is a piece of territory you can explore and join.
 
 <Video
   src="/videos/case-studies/subscape/realms-map.mp4"
@@ -76,24 +67,47 @@ The design leaned into light strategy mechanics: map control, community identity
   label="The Island map with the Realms, and Scout welcoming a new player"
 />
 
-Making the main page feel alive and help you feel part of the community.
+Open a Realm and you see who's there, what this week's rewards are, and exactly what you need to do this week to get your share. That last part is what governance usually never tells you.
 
-<Figure src={mainPage} alt="Subscape main page with the Realms map and community activity" />
+<Figure
+  src={mainPage}
+  alt="A Realm panel on The Island map showing population, questline, weekly rewards and the actions needed to earn them"
+  caption="Population, questline, this week's rewards, and what you need to do to earn them."
+/>
 
-Each screen would have the following components, making it easy for users to scan.
+---
 
-<Figure src={screenComponents} alt="Subscape screen components" />
+<SectionTitle eyebrow="Decision #2">Scout instead of a rulebook</SectionTitle>
 
-Scout was there all along to help guide you through the path.
+We went back and forth on the introduction quite a bit. Dumping all the rules on people up front would have made it feel like exactly what they were afraid of: a complicated new game.
 
-<Figure src={scoutGuide} alt="Scout, the guide character, helping a player through the game" />
+So Scout explains things as you go. Scout is a dog, which fit the Taho brand best, since Taho already used a dog in its visuals. Scout welcomes you when you join a Realm and points you to your first quests. The full rulebook is still there if you want the details.
 
-Once BETA was over, users could claim their tokens, with a limited supply.
+<Figure
+  src={screenComponents}
+  alt="Scout welcoming a new citizen of Arbiland and pointing them to their first quests"
+  caption="Scout welcoming a new citizen and pointing them to their first quests."
+/>
+
+---
+
+<SectionTitle eyebrow="Decision #3">Making the reward moment feel good</SectionTitle>
+
+If taking part was going to feel worth it, the payoff had to be visible. XP builds up over the season, and when the beta ended, players could claim their tokens from a limited supply.
+
+For the claim screen, I went for a bit of a celebration: "You have landed!", confetti over The Island and the amount right in the middle. Right after that comes the next thing to do, which is inviting friends.
+
+<Figure
+  src={scoutGuide}
+  alt="Claim screen reading 'You have landed!' with the claimed TAHO amount and a referral prompt"
+  caption="The claim at the end of the beta, with a referral prompt right after."
+/>
 
 ---
 
 <SectionTitle eyebrow="Results">How did it go?</SectionTitle>
 
-We started with 5 Realms (Arbitrum, Frax, Gitcoin, CyberConnect, zkSync), and quickly grew to 7 with Base and Galxe joining us after the beta launch.
-
-The Beta ran for 6 weeks, with 60k users joining a Realm and competing to win the most XP.
+- **60,000 players** joined a Realm during the 6-week beta, and the average session was about 6 minutes.
+- **7 Realms** by the end of the beta. We launched with 5 (Arbitrum, Frax, Gitcoin, CyberConnect and zkSync), and Base and Galxe joined later. We were aiming for 10, so we didn't quite get there.
+- **Taho Wallet's monthly active users went up** during the beta.
+- **There was a second season**, with more brands and more players than the first.

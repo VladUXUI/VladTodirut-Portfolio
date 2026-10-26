@@ -5,10 +5,18 @@ import Image, { type StaticImageData } from "next/image";
  * src/mdx-components.tsx, so MDX can use them without importing.
  */
 
-/* Small mono label above a section title, e.g. "TASK #1" */
-export function SectionTitle({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {
+/* Small mono label above a section title, e.g. "TASK #1". `id` lets a Timeline link to it */
+export function SectionTitle({
+  eyebrow,
+  id,
+  children,
+}: {
+  eyebrow: string;
+  id?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="mt-48 flex flex-col gap-12 first:mt-0">
+    <div id={id} className="mt-48 flex scroll-mt-96 flex-col gap-12 first:mt-0">
       <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
       <h2 className="text-title-md font-medium">{children}</h2>
     </div>
@@ -105,5 +113,40 @@ export function Step({ title, children }: { title: string; children: React.React
       <h4 className="text-body-lg font-medium text-fg">{title}</h4>
       <div className="flex flex-col gap-16">{children}</div>
     </div>
+  );
+}
+
+/*
+ * Skim layer for a page: a row of steps (years, stages) that link down to
+ * their sections. Horizontal from md up, vertical on mobile.
+ */
+export function Timeline({
+  items,
+}: {
+  items: { label: string; title: string; text: string; href?: string }[];
+}) {
+  return (
+    <ol className="my-24 flex flex-col gap-32 md:flex-row md:gap-24">
+      {items.map(({ label, title, text, href }) => (
+        <li
+          key={title}
+          className="relative flex flex-col gap-8 border-l border-dot pl-24 md:flex-1 md:border-t md:border-l-0 md:pt-32 md:pl-0"
+        >
+          <span
+            aria-hidden
+            className="absolute top-0 -left-[5px] size-[9px] rounded-full bg-accent-lime md:-top-[5px] md:left-0"
+          />
+          <span className="text-label font-mono uppercase text-accent-lime">{label}</span>
+          {href ? (
+            <a href={href} className="text-body-lg font-medium text-fg hover:text-accent-lime">
+              {title}
+            </a>
+          ) : (
+            <span className="text-body-lg font-medium text-fg">{title}</span>
+          )}
+          <span className="text-body font-light text-fg-muted">{text}</span>
+        </li>
+      ))}
+    </ol>
   );
 }

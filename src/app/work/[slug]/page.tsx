@@ -23,7 +23,10 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   if (!project) return {};
   const { meta } = await loadCaseStudy(slug);
   return {
-    title: `${project.title} case study — Vlad Todirut`,
+    // The AI / design system pages aren't case studies
+    title: productProjects.includes(project)
+      ? `${project.title} case study — Vlad Todirut`
+      : `${project.title} — Vlad Todirut`,
     description: meta.summary,
   };
 }

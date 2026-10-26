@@ -1,0 +1,97 @@
+export const meta = {
+  summary: "Know your ground. A civic alerts app for Sweden that I co-founded, designed, and built end to end with AI.",
+  heroAlt: "Skouta app screens",
+  link: { label: "skouta.app", href: "https://skouta.app" },
+};
+
+{/* IMAGE NEEDED: hero (key app screens with Pip) */}
+
+<SectionTitle eyebrow="Intro">Know your ground</SectionTitle>
+
+If you move to Sweden and don't speak Swedish, you hit the same wall pretty much on day one. Public information here is really good, but it's in Swedish, and it's spread across a lot of different places. Police, weather warnings, transport and emergencies all have their own official site.
+
+Skouta pulls official alerts from all of them into one feed, in English, with a map, push notifications and a morning digest.
+
+There are two of us. My co-founder is a UX writer and content designer, and came up with the bigger idea behind it: this isn't really an alert app, it's a way to feel at home in the country you chose to live in. They also wrote the voice and all the copy. I did the product design, the design system and the visual brand, and I built the whole thing with Claude Code and Cursor. That means the app, the backend, the data fetchers and the store submissions.
+
+<Meta
+  items={[
+    { label: "Role", value: ["Co-founder", "Product & brand design", "Built it with AI"] },
+    { label: "Timeline", value: ["Started March 2026", "Live on iOS and Android"] },
+    { label: "Built with", value: ["Claude Code, Cursor", "Expo, Supabase, DeepL"] },
+  ]}
+/>
+
+<Stats
+  eyebrow="Where it stands"
+  items={[
+    { value: "~5 months", label: "From idea to the App Store" },
+    { value: "8", label: "Official sources, checked every 10–15 minutes" },
+    { value: "~1,400", label: "Alerts tracked a week" },
+  ]}
+/>
+
+---
+
+<SectionTitle eyebrow="Decision #1">Keeping notifications calm</SectionTitle>
+
+A safety app can easily turn into an anxiety app. If your phone buzzes for everything, you either start worrying all the time or you turn notifications off, and then you miss the one alert that actually matters.
+
+So we split notifications into levels. Critical alerts always get pushed. Important ones only get pushed for the categories you picked. Minor ones never buzz at all, they go into the morning digest.
+
+{/* IMAGE NEEDED: notification settings + example push ("Södermalm · Police incident") */}
+
+The home screen works the same way. Before you see any feed, each saved location gets a simple status based on what's happening nearby, so most days you know if anything's going on at a glance.
+
+{/* NEEDS INPUT: confirm the status names (the app shows "Heads up"; older docs say All clear / Attention / Take care) */}
+{/* IMAGE NEEDED: home screen with location status */}
+
+---
+
+<SectionTitle eyebrow="Decision #2">Dropping most of the minor alerts</SectionTitle>
+
+Once the data was flowing, we noticed a big chunk of the minor alerts were just noise. They didn't help anyone, and translating all of them wasn't cheap either. So we dropped them.
+
+The feed shows less than the official sources do, on purpose. Anything that makes it in is worth a look, and the translation budget goes where it matters.
+
+{/* IMAGE NEEDED: alerts feed / map with filters */}
+
+---
+
+<SectionTitle eyebrow="Decision #3">Removing sign-up</SectionTitle>
+
+Skouta used to have a sign-up with a one-time code. PostHog showed some drop-off at that step. Not a big one, but we also didn't feel an account was a must, so we took it out.
+
+Now you open the app, pick your city and you're in, with 14 days of Premium to start. Premium is tied to your device or store account instead.
+
+{/* IMAGE NEEDED: onboarding, before and after removing sign-up */}
+
+---
+
+<SectionTitle eyebrow="Brand">Pip and the coral</SectionTitle>
+
+I designed the visual identity: the logo, the coral and dark palette, and Pip, a small bird who always knows first. The palette stands out in the Swedish App Store. I made Pip in a bunch of poses for the digest, empty states, loading and the paywall.
+
+{/* IMAGE NEEDED: Pip variations + palette */}
+
+---
+
+<SectionTitle eyebrow="Building it">Building the whole thing myself</SectionTitle>
+
+I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend in Stockholm, fetchers that check eight official sources every 10–15 minutes, DeepL translation, push notifications, the paywall, and both store submissions.
+
+Figma only has the core components (buttons, cards, toggles and so on). Everything else I designed straight in code.
+
+{/* IMAGE NEEDED: Figma core components next to the same components in the app */}
+
+Skouta is live on iOS and Android now, tracking around 1,400 alerts a week. It's still early days, and we're working on marketing at the moment.
+
+---
+
+<SectionTitle eyebrow="Reflection">What building it taught me</SectionTitle>
+
+AI made it possible for one designer to build the whole product, but it didn't make it quick. It takes longer than people advertise, there's definitely a learning curve, and there's a lot you don't know (and probably overlook) until it comes up. Building it is also only the first step. Maintaining and shipping it can end up being where most of the time goes.
+
+The biggest one for me: don't let AI make the product and design decisions for you. Left alone, it fills every gap with a reasonable default, and a product made of reasonable defaults feels like every other product. Every decision on this page was ours.
+
+And document every decision. When AI writes most of the code, the reasoning only exists if you write it down.

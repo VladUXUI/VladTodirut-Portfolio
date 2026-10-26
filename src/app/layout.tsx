@@ -20,7 +20,8 @@ const anonymousPro = Anonymous_Pro({
 
 export const metadata: Metadata = {
   title: "Vlad Todirut — Product Designer",
-  description: "Turning complex fintech problems into easy flows.",
+  description:
+    "Senior product designer. 15 years making complicated products easier to understand, mostly ones where a wrong click costs real money.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

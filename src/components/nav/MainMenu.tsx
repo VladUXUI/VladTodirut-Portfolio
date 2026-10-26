@@ -9,7 +9,8 @@ import { EASE_OUT, INTRO } from "@/components/intro/timeline";
 
 const ITEMS = [
   { label: "Home", href: "/" },
-  { label: "Work", href: "/work" },
+  // The work list lives on the homepage; case study pages still mark Work as active
+  { label: "Work", href: "/#work", match: "/work" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "#contact" },
 ] as const;
@@ -24,7 +25,7 @@ export function MainMenu() {
 
   const active =
     ITEMS.find((item) =>
-      item.href === "/" ? pathname === "/" : pathname.startsWith(item.href),
+      item.href === "/" ? pathname === "/" : pathname.startsWith("match" in item ? item.match : item.href),
     )?.href ?? null;
   const marked = hovered ?? active;
 
