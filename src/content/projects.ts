@@ -34,7 +34,7 @@ const allProductProjects: Project[] = [
     title: "Skouta",
     tags: "Co-Founder / Civic Alerts / MobileApp",
     description:
-      "Official Swedish safety alerts, in English, in one calm feed. I co-founded it, designed it and built the whole thing with AI. It's live on iOS and Android.",
+      "Official Swedish safety alerts, in English, in one calm feed. I co-founded it, designed it and built the whole thing with AI. Live on iOS and Android, and a finalist for the UX Nordics award.",
     image: "/images/work/skouta.png",
     overlay: "pip",
   },
