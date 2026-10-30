@@ -1,4 +1,4 @@
-import { CharReveal, Squiggle, Typewriter, WordReveal } from "./IntroText";
+import { CharReveal, Typewriter, WordReveal } from "./IntroText";
 import { INTRO } from "@/components/intro/timeline";
 import { Container } from "@/components/ui/Container";
 import { PortraitRings } from "./PortraitRings";
@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <Container
       as="section"
-      className="relative grid items-center gap-48 pt-128 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,720px)] lg:pt-0"
+      className="relative grid items-center gap-48 pt-128 pb-64 lg:min-h-[1000px] lg:grid-cols-[1fr_minmax(0,504px)] lg:pt-0"
     >
       <div className="bg-dots pointer-events-none absolute inset-24 -z-10" aria-hidden />
 
@@ -24,25 +24,20 @@ export function Hero() {
 
         <div className="flex flex-col gap-4 pl-8">
           <WordReveal
-            text="Senior product designer. I've spent 15 years making complicated products easier to understand, mostly ones where a wrong click costs real money."
+            text="Product Designer / Builder."
             delay={INTRO.tagline}
-            stagger={0.03}
-            className="max-w-[556px] text-lead font-light text-fg-muted"
+            className="text-lead font-light text-fg-muted"
           />
           <WordReveal
-            text="These days I also build what I design, with a lot of help from AI."
+            text="15 years in and I still wake up thinking about users and business problems (yes, before coffee). Solving them is still the fun part, and AI lets me do way more of it, way faster."
             delay={INTRO.subtitle}
-            stagger={0.02}
-            className="mt-16 max-w-[556px] text-body-lg font-light text-fg-dim"
+            stagger={0.03}
+            className="mt-8 text-body-lg font-light text-fg-dim"
           />
-          <p className="flex flex-col items-start gap-4 text-label font-mono text-fg-mono">
-            <Typewriter text="Since 2010" delay={INTRO.since} charDuration={0.05} />
-            <Squiggle delay={INTRO.squiggle} />
-          </p>
         </div>
       </div>
 
-      <PortraitRings className="mx-auto w-full max-w-[720px] lg:mr-0" />
+      <PortraitRings className="mx-auto w-full max-w-[504px] lg:mr-0" />
     </Container>
   );
 }

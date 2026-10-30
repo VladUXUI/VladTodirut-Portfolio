@@ -6,7 +6,7 @@ import { useIntro } from "./IntroProvider";
 import { SQUIGGLE_PATH, SQUIGGLE_VIEWBOX } from "./squiggle";
 
 /* Assets the first screen needs before the intro can play */
-const PRELOAD_IMAGES = ["/images/hero/portrait.png"];
+const PRELOAD_IMAGES = ["/images/hero/expressions/neutral.webp"];
 const MIN_DURATION = 900; // ms — avoid a flash on fast connections
 const MAX_DURATION = 5000; // ms — never block the site longer than this
 
