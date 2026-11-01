@@ -11,16 +11,14 @@ import matsExploration3 from "./mezo/mats-exploration-3.png";
 import matsFinal from "./mezo/mats-final.png";
 
 export const meta = {
-  summary: "Making a points program understandable for cautious Bitcoin users.",
+  summary: "Reworking a Bitcoin points dashboard so careful users could see how their points were doing, and what to do to get more.",
   hero,
   heroAlt: "Mezo mats dashboard",
 };
 
-<SectionTitle eyebrow="Intro">Making a points program make sense to very careful Bitcoin users</SectionTitle>
+<SectionTitle eyebrow="Intro">A points program for very careful Bitcoin users</SectionTitle>
 
 Mezo is a Bitcoin Layer 2. Before the main product launched, we ran a points program: you deposited assets, locked them for at least 3 months, and earned points we called "mats." (In web3, points usually hint that something else might come later. Wink wink.) How many mats you got depended on the asset, the amount, how long you locked it, and a share of what your referred friends earned.
-
-That's a lot of mechanics for one dashboard. As the program grew, people kept asking us the same things: how is my score calculated, what can I do to raise it, and how do referrals actually work?
 
 I was the only product designer, working with a PM and the engineering team. I proposed and prototyped the changes below, and the PM gave the final OK.
 
@@ -33,6 +31,16 @@ I was the only product designer, working with a PM and the engineering team. I p
 />
 
 <Stat eyebrow="Campaign scale" value="$150M" label="Total Value Locked during the campaign" />
+
+---
+
+<SectionTitle eyebrow="The problem">People couldn't tell how their mats were doing</SectionTitle>
+
+As the program grew, people kept asking us the same things. How is my score calculated? What can I do to raise it? How do referrals actually work?
+
+The dashboard didn't make any of that easy to figure out. It had grown one feature at a time since launch, and it showed the program's mechanics: deposits in one spot, referrals and secondary friends in another, mats from each listed separately, and no total anywhere. A couple of our launch assumptions about how people would deposit turned out to be wrong too.
+
+What people actually wanted to know was simpler. How many mats do I have, is that going up, and what can I do to get more? The page didn't answer any of those directly, so they asked us instead.
 
 ---
 

@@ -7,6 +7,8 @@ import { caseStudySlugs, hasCaseStudy, loadCaseStudy } from "@/content/case-stud
 import { CaseStudyLink } from "@/components/ui/CaseStudyLink";
 import { Container } from "@/components/ui/Container";
 import { Video } from "@/components/case-study/Video";
+import { pageMetadata } from "@/app/shared-metadata";
+import { JsonLd, caseStudyGraph } from "@/app/structured-data";
 
 const allProjects = [...productProjects, ...aiProjects];
 const pad = (n: number) => String(n + 1).padStart(2, "0");
@@ -22,13 +24,14 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   const project = allProjects.find((p) => p.slug === slug);
   if (!project) return {};
   const { meta } = await loadCaseStudy(slug);
-  return {
+  return pageMetadata({
     // The AI / design system pages aren't case studies
     title: productProjects.includes(project)
       ? `${project.title} case study — Vlad Todirut`
       : `${project.title} — Vlad Todirut`,
     description: meta.summary,
-  };
+    path: `/work/${slug}`,
+  });
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
@@ -45,6 +48,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
 
   return (
     <main className="flex flex-1 flex-col">
+      <JsonLd
+        graph={caseStudyGraph({
+          slug,
+          title: productProjects.includes(project) ? `${project.title} case study` : project.title,
+          description: meta.summary,
+          image: meta.hero?.src ?? meta.heroVideo?.poster,
+        })}
+      />
       <Container as="header" className="flex flex-col gap-24 pt-160 lg:pt-192">
         <div className="flex items-baseline gap-16">
           <span className="text-label font-mono text-fg-mono">{pad(index)}.</span>

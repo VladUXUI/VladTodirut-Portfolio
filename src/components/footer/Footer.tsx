@@ -18,7 +18,7 @@ export function Footer() {
           <CopyEmail email={site.email} />
 
           <ul className="flex flex-wrap gap-x-48 gap-y-16">
-            {site.profiles.map((link) => (
+            {[...site.profiles, { label: "CV", href: site.cv }].map((link) => (
               <li key={link.label}>
                 <a
                   href={link.href}
