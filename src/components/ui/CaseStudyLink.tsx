@@ -2,6 +2,7 @@
 
 import { useId } from "react";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 /*
  * Figma "BT_case": Default → hover (lime) → pressed (lime, hatch fills in).
@@ -21,6 +22,7 @@ export function CaseStudyLink({
     <Link
       href={href}
       {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+      onClick={() => posthog.capture("case_study_opened", { destination_type: external ? "external" : "internal" })}
       className="group inline-flex items-center gap-4 text-cta tracking-tag whitespace-nowrap text-fg transition-colors duration-150 hover:text-accent-lime focus-visible:text-accent-lime focus-visible:outline-none active:text-accent-lime"
     >
       {label}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import posthog from "posthog-js";
 
 /* Big email that copies on click; falls back to mailto if the clipboard is blocked */
 export function CopyEmail({ email }: { email: string }) {
@@ -15,8 +16,10 @@ export function CopyEmail({ email }: { email: string }) {
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(email);
+      posthog.capture("contact_email_copied");
       setCopied(true);
     } catch {
+      posthog.capture("contact_email_opened");
       window.location.href = `mailto:${email}`;
     }
   };
