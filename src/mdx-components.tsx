@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import { AboutPhotos } from "@/components/about/AboutPhotos";
 import { BeforeAfter } from "@/components/case-study/BeforeAfter";
 import { Figure, Meta, Screens, SectionTitle, Stat, Stats, Step, Timeline } from "@/components/case-study/blocks";
 import { PipStatuses } from "@/components/case-study/PipStatuses";
@@ -28,6 +29,7 @@ const components: MDXComponents = {
   // `---` separates the big sections
   hr: () => <hr className="my-72 border-dot" />,
   SectionTitle,
+  AboutPhotos,
   Meta,
   Screens,
   PipStatuses,
