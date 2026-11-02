@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import posthog from "posthog-js";
 import {
   AnimatePresence,
   MotionConfig,
@@ -147,7 +148,10 @@ function DesktopWorks({
                 index={i}
                 active={i === active}
                 activeClass={colors.text}
-                onSelect={() => goTo(i)}
+                onSelect={() => {
+                  posthog.capture("project_preview_selected", { project_slug: project.slug });
+                  goTo(i);
+                }}
               />
             ))}
           </ol>

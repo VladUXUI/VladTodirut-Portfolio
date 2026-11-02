@@ -5,20 +5,26 @@ import Image, { type StaticImageData } from "next/image";
  * src/mdx-components.tsx, so MDX can use them without importing.
  */
 
-/* Small mono label above a section title, e.g. "TASK #1". `id` lets a Timeline link to it */
+/*
+ * Small mono label above a section title, e.g. "TASK #1". `id` lets a Timeline
+ * link to it. `level={1}` for the page heading on pages without their own h1.
+ */
 export function SectionTitle({
   eyebrow,
   id,
+  level = 2,
   children,
 }: {
   eyebrow: string;
   id?: string;
+  level?: 1 | 2;
   children: React.ReactNode;
 }) {
+  const Heading = level === 1 ? "h1" : "h2";
   return (
     <div id={id} className="mt-48 flex scroll-mt-96 flex-col gap-12 first:mt-0">
       <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
-      <h2 className="text-title-md font-medium">{children}</h2>
+      <Heading className="text-title-md font-medium">{children}</Heading>
     </div>
   );
 }
@@ -54,16 +60,31 @@ export function Stats({
 }: {
   eyebrow: string;
   items: { value: string; label: string }[];
-  /** Smaller numbers, for context stats that shouldn't shout */
+  /** Smaller numbers stacked in a list, for context stats that shouldn't shout */
   small?: boolean;
 }) {
+  if (small) {
+    return (
+      <div className="my-24 flex flex-col gap-16">
+        <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
+        <dl className="flex flex-col gap-32">
+          {items.map(({ value, label }) => (
+            <div key={label} className="flex flex-col gap-8">
+              <dt className="text-title-xl font-medium">{value}</dt>
+              <dd className="text-body-lg font-light text-fg-muted">{label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    );
+  }
   return (
     <div className="my-24 flex flex-col gap-8">
       <span className="text-label font-mono uppercase text-accent-lime">{eyebrow}</span>
       <div className="flex flex-wrap gap-x-96 gap-y-24">
         {items.map(({ value, label }) => (
           <div key={label} className="flex flex-col gap-8">
-            <span className={`${small ? "text-title-xl" : "text-display"} font-medium`}>{value}</span>
+            <span className="text-display font-medium">{value}</span>
             <span className="text-body-lg font-light text-fg-muted">{label}</span>
           </div>
         ))}
@@ -104,6 +125,33 @@ export function Figure({
         }
         className={`h-auto w-full ${rounded ? "rounded-lg" : ""}`}
       />
+      {caption && <figcaption className="text-body text-fg-dim">{caption}</figcaption>}
+    </figure>
+  );
+}
+
+/* Phone screens side by side, one shared caption */
+export function Screens({
+  images,
+  caption,
+}: {
+  images: { src: StaticImageData; alt: string }[];
+  caption?: string;
+}) {
+  return (
+    <figure className="my-24 flex flex-col gap-12">
+      <div className="grid grid-cols-3 gap-12 md:gap-24">
+        {images.map(({ src, alt }) => (
+          <Image
+            key={src.src}
+            src={src}
+            alt={alt}
+            placeholder={src.blurDataURL ? "blur" : "empty"}
+            sizes="(min-width: 1200px) 360px, 33vw"
+            className="h-auto w-full"
+          />
+        ))}
+      </div>
       {caption && <figcaption className="text-body text-fg-dim">{caption}</figcaption>}
     </figure>
   );

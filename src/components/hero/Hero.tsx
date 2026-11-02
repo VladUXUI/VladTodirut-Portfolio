@@ -13,7 +13,7 @@ export function Hero() {
 
       <div className="flex flex-col gap-40">
         <h1 className="flex flex-col">
-          <CharReveal text="Vlad" delay={INTRO.name} className="text-display font-medium" />
+          <CharReveal text="Vlad" delay={INTRO.name} className="text-display font-medium" />{" "}
           <Typewriter
             text="Todirut"
             delay={INTRO.surname}

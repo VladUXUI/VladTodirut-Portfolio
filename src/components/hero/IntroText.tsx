@@ -7,6 +7,13 @@ import { EASE_OUT } from "@/components/intro/timeline";
 
 const INSTANT = { duration: 0 };
 
+/*
+ * The animated pieces draw their text from data-text through ::before, so the
+ * page text (what crawlers and screen readers get) is only the sr-only copy,
+ * read once and with its spaces.
+ */
+const FROM_DATA = "before:content-[attr(data-text)]";
+
 /* Letters slide up from behind a mask, one after another */
 export function CharReveal({
   text,
@@ -28,13 +35,12 @@ export function CharReveal({
         // Padding gives ascenders/descenders room inside the mask
         <span key={i} className="-my-[0.12em] inline-block overflow-hidden py-[0.12em]" aria-hidden>
           <motion.span
-            className="inline-block"
+            className={`inline-block ${FROM_DATA}`}
+            data-text={char}
             initial={{ y: "110%" }}
             animate={ready ? { y: 0 } : { y: "110%" }}
             transition={reduce ? INSTANT : { delay: delay + i * stagger, duration: 0.8, ease: EASE_OUT }}
-          >
-            {char}
-          </motion.span>
+          />
         </span>
       ))}
     </span>
@@ -63,13 +69,12 @@ export function WordReveal({
         <span key={i} aria-hidden>
           <span className="-mb-[0.15em] inline-block overflow-hidden pb-[0.15em] align-bottom">
             <motion.span
-              className="inline-block"
+              className={`inline-block ${FROM_DATA}`}
+              data-text={word}
               initial={{ y: "100%", opacity: 0 }}
               animate={ready ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
               transition={reduce ? INSTANT : { delay: delay + i * stagger, duration: 0.7, ease: EASE_OUT }}
-            >
-              {word}
-            </motion.span>
+            />
           </span>
           {i < words.length - 1 && " "}
         </span>

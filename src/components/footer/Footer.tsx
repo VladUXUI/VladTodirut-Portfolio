@@ -5,7 +5,7 @@ import { CopyEmail } from "./CopyEmail";
 
 export function Footer() {
   return (
-    <footer id="contact" className="relative mt-160 border-t border-dot">
+    <footer id="contact" className="relative mt-160 border-t border-dot print:hidden">
       <div className="bg-dots pointer-events-none absolute inset-0 -z-10" aria-hidden />
 
       <Container className="flex flex-col gap-96 pt-128 pb-48 lg:pt-160">
@@ -18,19 +18,22 @@ export function Footer() {
           <CopyEmail email={site.email} />
 
           <ul className="flex flex-wrap gap-x-48 gap-y-16">
-            {site.profiles.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-8 text-cta tracking-tag text-fg transition-colors duration-150 hover:text-accent-lime focus-visible:text-accent-lime focus-visible:outline-none"
-                >
-                  {link.label}
-                  <ArrowUpRight />
-                </a>
-              </li>
-            ))}
+            {[...site.profiles, { label: "CV", href: "/cv" }].map((link) => {
+              // Profiles open in a new tab and get the arrow; the CV page doesn't
+              const external = link.href.startsWith("http");
+              return (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="inline-flex items-center gap-8 text-cta tracking-tag text-fg transition-colors duration-150 hover:text-accent-lime focus-visible:text-accent-lime focus-visible:outline-none"
+                  >
+                    {link.label}
+                    {external && <ArrowUpRight />}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
 

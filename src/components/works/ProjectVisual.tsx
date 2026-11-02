@@ -41,7 +41,7 @@ export function ProjectVisual({
             <PipSinging className="absolute" style={{ left: "74.93%", top: "66.12%", width: "30.52%" }} />
           </div>
         )}
-        {project.overlay === "taho-signing" && <TahoSigning />}
+        {project.overlay === "taho-signing" && <TahoSigning active={active} />}
         {project.overlay === "mezo-layers" && <MezoLayers active={active} />}
       </>
     );

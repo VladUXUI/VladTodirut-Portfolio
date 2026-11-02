@@ -1,6 +1,12 @@
 import hero from "./skouta/hero.png";
 import onboardingFlow from "./skouta/onboarding-flow.png";
-import map from "./skouta/map.png";
+import onboarding1 from "./skouta/onboarding-1.png";
+import onboarding2 from "./skouta/onboarding-2.png";
+import onboarding3 from "./skouta/onboarding-3.png";
+import feedList from "./skouta/Skouta_App_Screenshot_List.png";
+import feedMap from "./skouta/Skouta_App_Screenshot_Map.png";
+import alertDetails from "./skouta/Skouta_App_Screenshot_Alerts.png";
+import brand from "./skouta/SkoutaBrand.png";
 
 export const meta = {
   summary: "Know your ground. A civic alerts app for Sweden that I co-founded, designed, and built end to end with AI.",
@@ -15,7 +21,7 @@ If you move to Sweden and don't speak Swedish, you hit the same wall pretty much
 
 Skouta pulls official alerts from all of them into one feed, in English, with a map, push notifications and a morning digest.
 
-There are two of us. My co-founder is a UX writer and content designer, and came up with the bigger idea behind it: this isn't really an alert app, it's a way to feel at home in the country you chose to live in. They also wrote the voice and all the copy. I did the product design, the design system and the visual brand, and I built the whole thing with Claude Code and Cursor. That means the app, the backend, the data fetchers and the store submissions.
+There are two of us. My co-founder is a UX writer and content designer, and came up with the bigger idea behind it: this isn't really an alert app, it's a way to feel at home in the country you chose to live in. They also wrote the voice and all the copy. I did the product design, the design system and the visual brand, and I built the whole thing with Claude Code and Cursor. That means the app, the backend, the API integrations and the store submissions.
 
 <Meta
   items={[
@@ -38,34 +44,45 @@ There are two of us. My co-founder is a UX writer and content designer, and came
 
 ---
 
+<SectionTitle eyebrow="The problem">Getting the information to everyone who lives here</SectionTitle>
+
+{/* NEEDS INPUT: framed around the "civic access" idea and drafted from the decisions below. Is this how you'd put it? */}
+
+Public safety information in Sweden is meant for everyone who lives here. If you don't read Swedish, you're mostly left out of it.
+
+Translating it fixes the language part. But while building an app around it, it's really easy to put new barriers in the way. Pushing so many notifications that people turn them off. Burying the alerts that matter under ones that don't. Asking for an email before you see anything. Putting safety behind a paywall.
+
+Any one of those and you've left people out again, in a different way. So the problem for us was getting people to that information and keeping them there, without adding any of them. Each decision below takes one away.
+
+---
+
 <SectionTitle eyebrow="Decision #1">Keeping notifications calm</SectionTitle>
 
 A safety app can easily turn into an anxiety app. If your phone buzzes for everything, you either start worrying all the time or you turn notifications off, and then you miss the one alert that actually matters.
 
 So we split notifications into levels. Critical alerts always get pushed. Important ones only get pushed for the categories you picked. Minor ones never buzz at all, and they're not in the morning digest either. They're still in the app if you want them, for your location or on the map.
 
-<Figure
-  src={map}
-  alt="Skouta map view around Lake Mälaren, with alert markers coloured by level"
-  caption="The map view. Red is critical, yellow is important, blue is minor."
-/>
-
 {/* IMAGE NEEDED: notification settings + example push ("Södermalm · Police incident") */}
 
-The home screen works the same way. Each saved location opens with a quick read of what's going on around it, before any feed: **All clear**, **Attention** or **Take care!**, with the number of incidents nearby. Pip changes with it too. Singing in front of a blue sun when it's quiet, yellow when there's something to keep an eye on, and red when it's critical. So most days you can tell how things are around you without reading anything.
+The home screen works the same way. Each saved location opens with a quick read of what's going on around it, before any feed: **All clear**, **Heads up** or **Take care**, with the number of incidents nearby. Pip changes with it too. Singing in front of a blue sun when it's quiet, yellow when there's something to keep an eye on, and red when it's critical. So most days you can tell how things are around you without reading anything.
 
-{/* NEEDS INPUT: the homepage card shows "Heads up · A few incidents in your area". Is that a fourth state, or an older name? */}
-{/* IMAGE NEEDED: the three home statuses side by side (All clear / Attention / Take care!) */}
+<PipStatuses caption="The top of the home screen in each state, with the same animations as in the app." />
 
 ---
 
 <SectionTitle eyebrow="Decision #2">Dropping most of the minor alerts</SectionTitle>
 
-Once the data was flowing, we noticed a big chunk of the minor alerts were just noise. They didn't help anyone, and translating all of them wasn't cheap either. So we dropped them.
+Once the data was flowing, we noticed a big chunk of the minor alerts were just noise. They didn't help anyone, and translating all of them wasn't cheap either. So we dropped them, which took us from around 5,000 alerts a week to about 1,400.
 
 The feed shows less than the official sources do, on purpose. Anything that makes it in is worth a look, and the translation budget goes where it matters.
 
-{/* IMAGE NEEDED: alerts feed / map with filters */}
+<Screens
+  images={[
+    { src: feedList, alt: "Alerts as a list: Critical and Important filters at the top, then cards for an assault in Stockholm and a fire in Uppsala, each marked Critical" },
+    { src: feedMap, alt: "The same alerts on a map around Stockholm, with markers coloured by level and the level filters at the top" },
+    { src: alertDetails, alt: "Alert details for a fire in Uppsala: a small map, the Critical tag, the translated report, the source (Swedish Police Authority) and a note that it was translated with AI" },
+  ]}
+/>
 
 ---
 
@@ -80,6 +97,15 @@ Now you open the app, pick your city and you're in, with 14 days of Premium to s
   alt="Onboarding flow: three selling points, add your city, then the removed steps (enter email, one-time code check, enter or resend code) before the final screen"
   caption="The original onboarding. The greyed-out steps (email, one-time code, resend) are the ones we took out."
   rounded={false}
+/>
+
+<Screens
+  images={[
+    { src: onboarding1, alt: "Onboarding screen 1: the Skouta bird and \"Welcome to Skouta. Get ready to know your ground.\"" },
+    { src: onboarding2, alt: "Onboarding screen 2: two birds saying \"hi!\" and \"hej!\", with \"Know when something happens near you. In English or Swedish.\"" },
+    { src: onboarding3, alt: "Onboarding screen 3: digest widgets with a 7-day trend and alert counts, and \"Daily Digest, delivered when you want to.\"" },
+  ]}
+  caption="The first three screens now. After these you pick your city and you're in."
 />
 
 ---
@@ -98,17 +124,21 @@ Everyone gets two weeks of Premium when they start, so they can try all of it be
 
 ---
 
-<SectionTitle eyebrow="Brand">Pip and the orange</SectionTitle>
+<SectionTitle eyebrow="Brand">Pip as the brand</SectionTitle>
 
 I designed the visual identity: the logo, the orange and dark palette, and Pip, a small bird who always knows first. The palette stands out in the Swedish App Store. I made Pip in a bunch of poses for the digest, empty states, loading and the paywall.
 
-{/* IMAGE NEEDED: Pip variations + palette */}
+<Figure
+  src={brand}
+  alt="Skouta brand sheet: the logo with Pip in front of an orange sun, Fraunces and DM Sans, the white, dark and orange palette, and six Pip poses (standing, sleeping, wearing a crown, singing, with a star headband, in a cap)"
+  rounded={false}
+/>
 
 ---
 
 <SectionTitle eyebrow="Building it">Building the whole thing myself</SectionTitle>
 
-I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend in Stockholm, fetchers that check nine official sources every 10–15 minutes, DeepL translation, push notifications, the paywall, and both store submissions.
+I built Skouta end to end with Claude Code and Cursor: an Expo app for iOS and Android, a Supabase backend in Stockholm, nine official API integrations written in SQL that check for new alerts every 10–15 minutes, cron jobs that send the daily digest and filter which alerts become notifications, DeepL translation, push notifications, the paywall, and both store submissions.
 
 Figma only has the core components (buttons, cards, toggles and so on). Everything else I designed straight in code.
 
@@ -120,7 +150,7 @@ Skouta is live on iOS and Android now, tracking around 1,400 alerts a week, and 
 
 <SectionTitle eyebrow="Reflection">What building it taught me</SectionTitle>
 
-AI made it possible for one designer to build the whole product, but it didn't make it quick. It takes longer than people advertise, there's definitely a learning curve, and there's a lot you don't know (and probably overlook) until it comes up. Building it is also only the first step. Maintaining and shipping it can end up being where most of the time goes.
+AI made it possible for one designer to build the whole product, but it didn't make it quick. It takes longer than people advertise, there's definitely a learning curve, and there's a lot you don't know (and probably overlook) until it comes up. Building it is also only the first step. Shipping it and getting users to it is where the lift is.
 
 The biggest one for me: don't let AI make the product and design decisions for you. Left alone, it fills every gap with a reasonable default, and a product made of reasonable defaults feels like every other product. Every decision on this page was ours.
 

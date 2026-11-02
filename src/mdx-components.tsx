@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import { BeforeAfter } from "@/components/case-study/BeforeAfter";
-import { Figure, Meta, SectionTitle, Stat, Stats, Step, Timeline } from "@/components/case-study/blocks";
+import { Figure, Meta, Screens, SectionTitle, Stat, Stats, Step, Timeline } from "@/components/case-study/blocks";
+import { PipStatuses } from "@/components/case-study/PipStatuses";
 import { Video } from "@/components/case-study/Video";
 
 /* Styles for markdown in case studies, plus the blocks MDX can use directly */
@@ -28,6 +29,8 @@ const components: MDXComponents = {
   hr: () => <hr className="my-72 border-dot" />,
   SectionTitle,
   Meta,
+  Screens,
+  PipStatuses,
   Stat,
   Stats,
   Figure,
