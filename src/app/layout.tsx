@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ...pageMetadata({
     title: "Vlad Todirut — Senior Product Designer",
     description:
-      "Senior product designer in Gothenburg, open to remote. 15 years on fintech and crypto products where a wrong click costs real money, plus design systems and building with AI.",
+      "Senior product designer in Gothenburg, open to remote. 15 years designing complex fintech and crypto products, plus design systems and shipping with AI.",
     path: "/",
   }),
 };
