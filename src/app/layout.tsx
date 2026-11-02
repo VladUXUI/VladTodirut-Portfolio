@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <noscript>
             <style>{"#site-loader{display:none}"}</style>
           </noscript>
-          <header className="absolute inset-x-0 top-48 z-10 flex justify-center">
+          <header className="absolute inset-x-0 top-48 z-10 flex justify-center print:hidden">
             <MainMenu />
           </header>
           {children}

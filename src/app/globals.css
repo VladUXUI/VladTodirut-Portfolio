@@ -119,6 +119,24 @@
   }
 }
 
+/* Printing (the /cv page → PDF): plain A4, black on white, no intro overlay */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  html {
+    background: var(--color-white);
+    color: var(--color-black);
+    scroll-snap-type: none;
+  }
+
+  #site-loader {
+    display: none;
+  }
+}
+
 /* 2px dots on a 32px grid (Figma "BackgroundDots") */
 @utility bg-dots {
   background-image: radial-gradient(

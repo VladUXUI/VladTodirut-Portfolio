@@ -10,6 +10,7 @@ import { EASE_OUT, INTRO } from "@/components/intro/timeline";
 const ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "CV", href: "/cv" },
   { label: "Contact", href: "#contact" },
 ] as const;
 

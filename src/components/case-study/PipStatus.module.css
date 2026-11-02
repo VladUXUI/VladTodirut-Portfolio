@@ -1,0 +1,144 @@
+/*
+ * Ported from the Skouta app (PipAllClear, PipImportant, PipCritical), same
+ * timings and hinges. Coordinates are in each SVG's own viewBox space
+ * (transform-box: view-box), so px here = SVG user units.
+ */
+.pip {
+  overflow: visible;
+}
+
+.pip * {
+  transform-box: view-box;
+}
+
+/* ---------- All clear: walks, bobs and sings ---------- */
+
+.clearBob {
+  animation: clearBob 1.6s ease-in-out infinite;
+}
+@keyframes clearBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.clearBeakTop {
+  transform-origin: 145px 265px;
+  animation: clearBeakTop 1.6s ease-in-out infinite;
+}
+@keyframes clearBeakTop {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(4deg); }
+}
+.clearBeakBottom {
+  transform-origin: 145px 265px;
+  animation: clearBeakBottom 1.6s ease-in-out infinite;
+}
+@keyframes clearBeakBottom {
+  0%, 100% { transform: rotate(6deg); }
+  50% { transform: rotate(-4deg); }
+}
+
+.clearLeg1 {
+  transform-origin: 290px 565px;
+  animation: clearLeg1 1.6s ease-in-out infinite;
+}
+@keyframes clearLeg1 {
+  0%, 100% { transform: rotate(-24deg); }
+  50% { transform: rotate(12deg); }
+}
+.clearLeg2 {
+  transform-origin: 332px 565px;
+  animation: clearLeg2 1.6s ease-in-out infinite;
+}
+@keyframes clearLeg2 {
+  0%, 100% { transform: rotate(12deg); }
+  50% { transform: rotate(-24deg); }
+}
+
+/* Three notes share one 3.2s clock, each visible for a third of it */
+.note {
+  opacity: 0;
+  animation: note 3.2s linear infinite;
+}
+.note2 {
+  animation-delay: -2.1333s;
+}
+.note3 {
+  animation-delay: -1.0667s;
+}
+@keyframes note {
+  0% { opacity: 0; transform: translateY(0); }
+  3%, 30% { opacity: 1; }
+  33% { opacity: 0; transform: translateY(-56px); }
+  100% { opacity: 0; transform: translateY(-56px); }
+}
+
+/* ---------- Heads up: breathes, walks, blinks ---------- */
+
+.upBreath {
+  transform-origin: 0 621px;
+  animation: upBreath 1.6s ease-in-out infinite;
+}
+@keyframes upBreath {
+  0%, 100% { transform: scaleY(0.98); }
+  50% { transform: scaleY(1.02); }
+}
+
+.upLeg1 {
+  transform-origin: 270px 540px;
+  animation: upLeg1 1.6s ease-in-out infinite;
+}
+@keyframes upLeg1 {
+  0%, 100% { transform: rotate(-12deg); }
+  50% { transform: rotate(6deg); }
+}
+.upLeg2 {
+  transform-origin: 284px 540px;
+  animation: upLeg2 1.6s ease-in-out infinite;
+}
+@keyframes upLeg2 {
+  0%, 100% { transform: rotate(6deg); }
+  50% { transform: rotate(-12deg); }
+}
+
+.upBlink {
+  transform-origin: 0 200px;
+  animation: blink 2.5s linear infinite;
+}
+.upBeak {
+  transform-origin: 145px 265px;
+  animation: upBeak 2.5s linear infinite;
+}
+@keyframes upBeak {
+  0%, 95%, 100% { transform: rotate(0); }
+  97%, 99% { transform: rotate(-2deg); }
+}
+
+/* ---------- Take care: frozen, blinks and glances forward ---------- */
+
+.careBlink {
+  transform-origin: 0 200px;
+  animation: blink 3.5s linear infinite;
+}
+.careLook {
+  animation: careLook 3s linear infinite;
+}
+@keyframes careLook {
+  0%, 50%, 95%, 100% { transform: translateX(0); }
+  55%, 90% { transform: translateX(-25px); }
+}
+
+/* Both lids snap shut toward the middle of the eye */
+@keyframes blink {
+  0%, 95%, 100% { transform: scaleY(1); }
+  97%, 99% { transform: scaleY(0.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pip * {
+    animation: none !important;
+  }
+  .note2 {
+    opacity: 1;
+  }
+}

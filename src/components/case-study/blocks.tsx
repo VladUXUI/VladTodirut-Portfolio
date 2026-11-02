@@ -130,6 +130,33 @@ export function Figure({
   );
 }
 
+/* Phone screens side by side, one shared caption */
+export function Screens({
+  images,
+  caption,
+}: {
+  images: { src: StaticImageData; alt: string }[];
+  caption?: string;
+}) {
+  return (
+    <figure className="my-24 flex flex-col gap-12">
+      <div className="grid grid-cols-3 gap-12 md:gap-24">
+        {images.map(({ src, alt }) => (
+          <Image
+            key={src.src}
+            src={src}
+            alt={alt}
+            placeholder={src.blurDataURL ? "blur" : "empty"}
+            sizes="(min-width: 1200px) 360px, 33vw"
+            className="h-auto w-full"
+          />
+        ))}
+      </div>
+      {caption && <figcaption className="text-body text-fg-dim">{caption}</figcaption>}
+    </figure>
+  );
+}
+
 /* Titled step inside a section, e.g. "Exploration #1" */
 export function Step({ title, children }: { title: string; children: React.ReactNode }) {
   return (
